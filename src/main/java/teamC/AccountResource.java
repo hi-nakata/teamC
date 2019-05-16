@@ -1,4 +1,4 @@
-package org.glassfish.jersey.archetypes.teamC;
+package teamC;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

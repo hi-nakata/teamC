@@ -1,4 +1,4 @@
-package org.glassfish.jersey.archetypes.teamC;
+package teamC;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
