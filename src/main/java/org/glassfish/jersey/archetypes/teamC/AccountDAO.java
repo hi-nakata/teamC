@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import tks.Account;
-import tks.ConnectionProvider;
-
 public class AccountDAO {
 
 	private static final String SQL ="select * \n" +
