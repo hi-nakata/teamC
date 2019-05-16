@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>マイページ</title>
+<!-- CSSの読み込み -->
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+</head>
+<body>
+
+
+	<div>
+		<ul class="header">
+			<li><p>蔵書管理システム(仮)</p></li>
+			<li><input type="button" value="マイページ"></li>
+			<li><input type="button" value="蔵書検索"></li>
+			<li><p>userName</p></li>
+		</ul>
+	</div>
+
+
+	<div>
+		<p id="page-title">マイページ</p>
+	</div>
+
+	<div id="list">
+				<p>借りている本一覧:</p>
+				<div id="rentals"></div>
+				<div id="insertBlock">
+					<button type="button" id="newRental">経費追加</button>
+				</div>
+			</div>
+
+
+<!-- 	<table border=1>
+		<tr>
+			<th>タイトル</th>
+			<th>返却予定日</th>
+			<th>ステータス</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<tr>
+			<td>Java入門</td>
+			<td>2019/6/1</td>
+			<td>あと５日です</td>
+			<td><input type="button" value="返却"></td>
+			<td><input type="button" value="詳細"></td>
+		</tr>
+	</table>  -->
+
+
+	<footer>
+		<a href="index.html">期限者一覧</a> <a href="about.html">蔵書登録</a> <a
+			href="profile.html">カテゴリ画面</a>
+	</footer>
+
+	<!-- JavaScriptの読み込み -->
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script type="text/javascript" src="shainList.js"></script>
+
+</body>
+</html>

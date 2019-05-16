@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ログイン</title>
+<!-- CSSの読み込み -->
+<link rel="stylesheet" type="text/css" href="style.css" />
+<!-- JavaScriptの読み込み -->
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script type="text/javascript" src="login.js"></script>
+
+</head>
+<body>
+	<div><p>蔵書管理システム</p></div>
+	<form id="loginForm" enctype="multipart/form-data">
+		<div>
+			<label for="js-input-loginPass">ID:</label>
+			<input type="text" name="js-input-loginId" id="js-input-loginId">
+		</div>
+		<div>
+			<label for="js-input-loginPass">PASS:</label>
+			<input type="text" name="js-input-loginPass" id="js-input-loginPass">
+		</div>
+		<button type="button" id="js-btn-login">ログイン</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>蔵書検索</title>
+<!-- CSSの読み込み -->
+<link rel="stylesheet" type="text/css" href="style.css" />
+<!-- JavaScriptの読み込み -->
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script type="text/javascript" src="shainList.js"></script>
+</head>
+<body>
+	<div>
+		<ul class="header">
+			<li><p>蔵書管理システム(仮)</p></li>
+			<li><input type="button" value="マイページ"></li>
+			<li><input type="button" value="蔵書検索"></li>
+			<li><p>userName</p></li>
+		</ul>
+	</div>
+	<div class="main">
+
+		<!-- ページタイトル -->
+		<div>
+			<p id="page-title">蔵書検索</p>
+		</div>
+
+		<!-- 検索タブ表示 -->
+		<div>
+		<input type="search" size="40" placeholder="タイトルを入力してください">
+		<button id="js-btn-search">検索</button>
+		</div>
+
+		<!-- 検索結果表示 -->
+		<div id=searchedList>
+			<!-- <table border=1>
+	  		<tr>
+				<th>タイトル</th>
+				<th>著者名</th>
+				<th>出版社</th>
+				<th>配架場所</th>
+				<th>ステータス</th>
+				<th>借りた人</th>
+				<th>返却予定日</th>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>はじめてのJAVA</td>
+				<td>未来太郎</td>
+				<td>現在出版社</td>
+				<td>A1</td>
+				<td>貸出中</td>
+				<td>過去次郎</td>
+				<td>20190523</td>
+				<td><input type="button" value="貸出"></td>
+				<td><input type="button" value="詳細"></td>
+			</tr>
+			</table>-->
+
+		</div>
+	</div>
+
+</body>
+</html>
