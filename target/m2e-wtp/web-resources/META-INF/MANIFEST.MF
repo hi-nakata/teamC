@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
+Built-By: h-nakata
+=======
 Built-By: ka-kato
+>>>>>>> 2a61d4d746193560253d48a4ef2536929b0fde44
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 
