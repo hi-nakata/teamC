@@ -11,7 +11,8 @@ public class BookDAO {
 
 	/**クエリ文字列**/
 
-	private static final String SELECT_ALL_BOOK = "select \n" +
+	private static final String SELECT_ALL_BOOK =
+			"select \n" +
 			"BO.TITLE \n" +
 			",BO.AUTHOR \n" +
 			",BO.PUBLISHER \n" +
@@ -59,9 +60,9 @@ public class BookDAO {
 		result.setTitle(rs.getString("title"));
 		result.setAuthor(rs.getString("author"));
 		result.setPublisher(rs.getString("shelf"));
-		result.setRentalStatus(rs.getInt("rentalStatus"));
-		result.setName(rs.getString("name"));
-		result.setDueDate(rs.getString("dueDate"));
+		result.setRentalStatus(rs.getInt("rental_Status"));
+		result.setName(rs.getString("EMPLOYEE_NAME"));
+		result.setDueDate(rs.getString("due_Date"));
 
 		return result;
 
