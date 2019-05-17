@@ -3,7 +3,14 @@
 var rootUrl = "/teamC/webapi/rentals";
 
 function displayAll(){
-	console.log('displayAll start.');
+
+	var id  = "mirai_kako";
+	 location.search.substring( 1, location.search.length );
+	 parameter = decodeURIComponent( parameter );
+	 parameter = parameter.split('=')[1];
+
+	console.log('displayAll start - id:');
+
 	$.ajax({
 		type : "GET",
 		url : rootUrl,
