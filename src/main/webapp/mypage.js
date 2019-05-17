@@ -2,7 +2,6 @@
 
 var rootUrl = "/teamC/webapi/rentals";
 
-/*すべての本を一覧表示する機能*/
 function displayAll(){
 	console.log('displayAll start.');
 	$.ajax({
@@ -49,8 +48,5 @@ $(document).ready(function () {
 
 	// 初期表示用
 	displayAll();
-
-	// 更新ボタンにイベント設定
-	//$('#searchBtn').bind('click',displayAll);
 
 });
