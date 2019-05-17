@@ -13,23 +13,22 @@ public class BookDAO {
 	/**クエリ文字列**/
 
 	private static final String SELECT_ALL_BOOK =
-			"select \n" +
-			"BO.TITLE \n" +
-			",BO.AUTHOR \n" +
-			",BO.PUBLISHER \n" +
-			",BO.SHELF \n" +
-			",RE.RENTAL_STATUS \n" +
-			",AC.EMPLOYEE_NAME \n" +
-			",RE.DUE_DATE \n" +
-			"from  \n" +
-			"BOOK BO, \n" +
-			"RENTAL RE, \n" +
-			"ACCOUNT AC \n" +
-			"where \n" +
-			"1=1 \n" +
-			"and RE.RENTAL_STATUS (+) = '1' \n" +
-			"and BO.BOOK_ID = RE.BOOK_ID(+) \n" +
-			"and RE.USER_ID = AC.USER_ID(+)";
+			"select  \n" +
+					"BO.TITLE ,BO.AUTHOR  \n" +
+					",BO.PUBLISHER  \n" +
+					",BO.SHELF  \n" +
+					",RE.RENTAL_STATUS  \n" +
+					",AC.EMPLOYEE_NAME  \n" +
+					",RE.DUE_DATE \n" +
+					" \n" +
+					"from  \n" +
+					"BOOK BO \n" +
+					" \n" +
+					"LEFT OUTER JOIN RENTAL RE \n" +
+					"ON BO.BOOK_ID = RE.BOOK_ID \n" +
+					" \n" +
+					"LEFT OUTER JOIN ACCOUNT AC \n" +
+					"ON RE.USER_ID = AC.USER_ID \n" ;
 
 
 	/**本のデータすべてを取得する**/

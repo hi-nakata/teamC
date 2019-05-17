@@ -10,9 +10,11 @@ var rootUrl = "/teamC/webapi/books";
 /*すべての本を一覧表示する機能*/
 function displayAll(){
 	console.log('displayAll start.');
+
+	var rootUrlInit = rootUrl + '?titleParam=';
 	$.ajax({
 		type : "GET",
-		url : rootUrl,
+		url : rootUrlInit,
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')
