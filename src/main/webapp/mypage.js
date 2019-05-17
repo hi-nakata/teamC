@@ -43,10 +43,23 @@ function displayAll(){
 	});
 }
 
+function goMypage(){
+	location.href ='./MyPage.html'
+}
+
+function goBookSearch(){
+	location.href ='./BookSearch.html'
+}
+
+
+
 $(document).ready(function () {
 	'use strict';
 
 	// 初期表示用
 	displayAll();
+
+	$('#js-btn-mypage').click(goMypage);
+	$('#js-btn-search').click(goBookSearch);
 
 });
