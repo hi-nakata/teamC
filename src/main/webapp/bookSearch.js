@@ -31,7 +31,16 @@ function displayAll(){
 					row.append($('<td>').text(book.author));
 					row.append($('<td>').text(book.publisher));
 					row.append($('<td>').text(book.shelf));
-					row.append($('<td>').text(book.rentalStatus));
+
+					var check = book.rentalStatus;
+					console.log("貸出ステータス:",check);
+
+					if(check == 1){
+						row.append($('<td>').text("貸出中"));
+					}else{
+						row.append($('<td>').text("在架中"));
+					}
+
 					row.append($('<td>').text(book.name));
 					row.append($('<td>').text(book.dueDate));
 
@@ -40,17 +49,20 @@ function displayAll(){
 
 
 					if(check == 1){
-
-						$('<button>').text("貸出").atter("type","button").attr("disabled")
-						$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
-						table.append(row);
+						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true")));
+						row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
+								//.attr("onclick","ここにクリックしたときのfunctionを書く")
 					}else{
 
-						$('<button>').text("貸出").attr("type","button")//.atter("onclick","ここにクリックしたときのfunctionを書く")
-					$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
-						table.append(row);
+					row.append($('<td>').append($('<button>').text("貸出").attr("type","button")));
+					//.atter("onclick","ここにクリックしたときのfunctionを書く")
+					row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
+				//.attr("onclick","ここにクリックしたときのfunctionを書く")
+
 					}
+					table.append(row)
 				});
+
 				$('#searchedList').append(table);
 			}
 		}
