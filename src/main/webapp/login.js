@@ -14,7 +14,7 @@ function login(){
 		success : function(data, textStatus, jqXHR) {
 			if(data==true){
 				alert('loginに成功しました');
-				location.href ='./MyPage.html'
+				location.href ='./MyPage.html?userId='+$('#js-input-loginId').val()
 			}else{
 				alert('loginに失敗しましたyo');
 			}

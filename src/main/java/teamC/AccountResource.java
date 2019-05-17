@@ -44,6 +44,7 @@ public class AccountResource {
 		boolean auth = accDao.auth(log);
 		if(auth==true){
 			session.setAttribute("loginId", log.getLoginId());
+			session.setAttribute("loginPass", log.getLoginPass());
 			System.out.println(session.getAttribute("loginId"));
 		}
 		return accDao.auth(log);
