@@ -1,6 +1,7 @@
 package teamC;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,11 +56,43 @@ public class BookDAO {
 		return result;
 	}
 
+
+	/**パラメータ指定の検索をする**/
+	public List<Book> findByParam(Param param){
+		List<Book> result = new ArrayList<>();
+
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null){
+			return result;
+		}
+
+		String queryString = SELECT_ALL_BOOK +param.getWhereClause();
+		try(PreparedStatement statement = connection.prepareStatement(queryString)){
+			param.setParameter(statement);
+
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()){
+				result.add(processRow(rs));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionProvider.close(connection);
+		}
+		return result;
+	}
+
+
+
+
+/**本のSQLデータ取得**/
 	private Book processRow(ResultSet rs) throws SQLException{
 		Book result = new Book();
 		result.setTitle(rs.getString("title"));
 		result.setAuthor(rs.getString("author"));
-		result.setPublisher(rs.getString("shelf"));
+		result.setPublisher(rs.getString("PUBLISHER"));
+		result.setShelf(rs.getString("shelf"));
 		result.setRentalStatus(rs.getInt("rental_Status"));
 		result.setName(rs.getString("EMPLOYEE_NAME"));
 		result.setDueDate(rs.getString("due_Date"));

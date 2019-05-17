@@ -5,70 +5,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 
 public class RentalCard {
-	private int bookId;
 	private String title;
-	private  String rentalDate;
 	private String dueDate;
-	private String checkDate;
-	private int alertStatus;
-	private String userId;
-	private int rantalStatus;
-	private String backDate;
-	public int getBookId() {
-		return bookId;
-	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
+	private int rentalStatus;
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getRentalDate() {
-		return rentalDate;
-	}
-	public void setRentalDate(String rentalDate) {
-		this.rentalDate = rentalDate;
-	}
+
 	public String getDueDate() {
 		return dueDate;
 	}
+
 	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
-	public String getCheckDate() {
-		return checkDate;
-	}
-	public void setCheckDate(String checkDate) {
-		this.checkDate = checkDate;
-	}
-	public int getAlertStatus() {
-		return alertStatus;
-	}
-	public void setAlertStatus(int alertStatus) {
-		this.alertStatus = alertStatus;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public int getRantalStatus() {
-		return rantalStatus;
-	}
-	public void setRantalStatus(int rantalStatus) {
-		this.rantalStatus = rantalStatus;
-	}
-	public String getBackDate() {
-		return backDate;
-	}
-	public void setBackDate(String backDate) {
-		this.backDate = backDate;
+
+	public int getRentalStatus() {
+		return rentalStatus;
 	}
 
+	public void setRentalStatus(int rentalStatus) {
+		this.rentalStatus = rentalStatus;
+	}
 
+	@Override
+	public String toString() {
+		return "RentalCard [title=" + title + ", dueDate=" + dueDate + ", rentalStatus=" + rentalStatus + "]";
+	}
 
 }
