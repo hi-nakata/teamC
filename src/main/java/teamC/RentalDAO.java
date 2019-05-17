@@ -9,8 +9,6 @@ import java.util.List;
 
 public class RentalDAO {
 
-	/**クエリ文字列**/
-
 	private static final String SELECT_ALL_RENTAL =
 					"select \n" +
 					"B.TITLE \n" +
@@ -21,13 +19,13 @@ public class RentalDAO {
 					",RENTAL R \n" +
 					",ACCOUNT A \n" +
 					"where 1=1 \n" +
-					"and B.BOOK_ID=R.BOOK_ID \n" +
-					"and R.USER_ID=A.USER_ID \n" +
+					"and B.BOOK_ID=R.BOOK_ID(+) \n" +
+					"and R.USER_ID=A.USER_ID(+) \n" +
 					"and A.USER_ID='mirai_kako' \n" +
-					"and R.RENTAL_STATUS=1 ";
+					"and R.RENTAL_STATUS(+)=1 ";
 
 
-	/**本のデータすべてを取得する**/
+
 
 	public List<RentalCard> allRentals(){
 		List<RentalCard> result = new ArrayList<>();
@@ -56,7 +54,6 @@ public class RentalDAO {
 		result.setTitle(rs.getString("TITLE"));
 		result.setDueDate(rs.getString("DUE_DATE"));
 		result.setRentalStatus(rs.getInt("RENTAL_STATUS"));
-
 		return result;
 
 	}

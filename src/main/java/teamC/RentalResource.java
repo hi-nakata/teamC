@@ -14,11 +14,11 @@ public class RentalResource {
 /**本一覧表示の実装**/
 	private final RentalDAO dao = new RentalDAO();
 
-	/**一覧用に本の情報を全件取得する**/
+	/**レンタル情報を全件取得する**/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RentalCard> allRentals(){
-		System.out.println("hoge");
+		System.out.println("ok");
 		return dao.allRentals();
 	}
 }

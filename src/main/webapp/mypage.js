@@ -30,22 +30,13 @@ function displayAll(){
 					row.append($('<td>').text(rental.title));
 					row.append($('<td>').text(rental.dueDate));
 					row.append($('<td>').text(rental.rentalStatus));
-
-					var check = rental.rentalStatus;
-					console.log("貸出ステータス:",check);
-
-
-				/**	if(check == 1){
-
-						$('<button>').text("貸出").atter("type","button").attr("disabled")
-						$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
-						table.append(row);
-					}else{
-
-						$('<button>').text("貸出").attr("type","button")//.atter("onclick","ここにクリックしたときのfunctionを書く")
-					$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
-						table.append(row);
-					} */
+					row.append($('<td>').append(
+							$('<button>').text("返却").attr("type","button").attr("onclick", "findById("+rental.bookId+')')
+						));
+					row.append($('<td>').append(
+							$('<button>').text("詳細").attr("type","button").attr("onclick", "deleteById("+rental.bookId+')')
+						));
+					table.append(row);
 				});
 				$('#rentals').append(table);
 			}
