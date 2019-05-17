@@ -1,6 +1,6 @@
 'use strict';
 
-var rootUrl = ;
+var rootUrl = "/teamC/webapi/books";
 
 /*すべての本を一覧表示する機能*/
 function displayAll(){
@@ -11,39 +11,59 @@ function displayAll(){
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')
+			console.log(json);
 
 			var headerRow='<tr><th>タイトル</th><th>著者名</th><th>出版社</th><th>配架場所</th><th>ステータス</th>'
 				+'<th>借りた人</th><th>返却予定日</th><th></th><th></th></tr>';
 
-			$.('#searchedList').children().remove();
+			$('#searchedList').children().remove();
 
 			if(json.length === 0){
-				$.('#searchedList').append('<p>現在データが存在していません。</p>')
+				$('#searchedList').append('<p>現在データが存在していません。</p>')
 			}else{
-			var table = $('<table>');
-			table.append(headerRow);
+				var table = $('<table>');
 
-			$.each(data,function(index,book)){
-				var row = $('<tr>')
-				row.append($('<tr>').text());
+				table.append(headerRow);
 
-				if(a=0){
+				$.each(json,function(index,book){
+					var row = $('<tr>')
+					row.append($('<td>').text(book.title));
+					row.append($('<td>').text(book.author));
+					row.append($('<td>').text(book.publisher));
+					row.append($('<td>').text(book.shelf));
+					row.append($('<td>').text(book.rentalStatus));
+					row.append($('<td>').text(book.name));
+					row.append($('<td>').text(book.dueDate));
 
-					$('<button>').text("貸出").atter("type","button").attr("disabled")
-					$('<button>').text("詳細").attr("type","button").attr("onclick","ここにクリックしたときのfunctionを書く")
-					table.append(row);
-				}else{
+					var check = book.rentalStatus;
+					console.log("貸出ステータス:",check);
 
-					$('<button>').text("貸出").attr("type","button").atter("onclick","ここにクリックしたときのfunctionを書く")
-					$('<button>').text("詳細").attr("type","button").attr("onclick","ここにクリックしたときのfunctionを書く")
-					table.append(row);
-				};
-			}
 
+					if(check == 1){
+
+						$('<button>').text("貸出").atter("type","button").attr("disabled")
+						$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
+						table.append(row);
+					}else{
+
+						$('<button>').text("貸出").attr("type","button")//.atter("onclick","ここにクリックしたときのfunctionを書く")
+					$('<button>').text("詳細").attr("type","button")//.attr("onclick","ここにクリックしたときのfunctionを書く")
+						table.append(row);
+					}
+				});
+				$('#searchedList').append(table);
 			}
 		}
-	}
-
-
-})
+	});
 }
+
+$(document).ready(function () {
+	'use strict';
+
+	// 初期表示用
+	displayAll();
+
+	// 更新ボタンにイベント設定
+	$('#searchBtn').bind('click',displayAll);
+
+});
