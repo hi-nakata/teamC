@@ -80,7 +80,7 @@ function displayAll(){
 function findByParam(){
 	console.log('findByParam start.')
 
-	var urlWithParam = rootUrl + '?titleParam='+$('#titleParam').val();
+	var urlWithParam = rootUrl + '?titleParam='+'%'+$('#titleParam').val()+'%';
 	$.ajax({
 		type : "GET",
 		url : urlWithParam,
