@@ -59,7 +59,8 @@ public class BookDAO {
 		Book result = new Book();
 		result.setTitle(rs.getString("title"));
 		result.setAuthor(rs.getString("author"));
-		result.setPublisher(rs.getString("shelf"));
+		result.setPublisher(rs.getString("PUBLISHER"));
+		result.setShelf(rs.getString("shelf"));
 		result.setRentalStatus(rs.getInt("rental_Status"));
 		result.setName(rs.getString("EMPLOYEE_NAME"));
 		result.setDueDate(rs.getString("due_Date"));
