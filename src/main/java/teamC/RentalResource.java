@@ -2,16 +2,12 @@ package teamC;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.xml.bind.ValidationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  * 経費関連のサービス実装。
@@ -27,7 +23,7 @@ public class RentalResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RentalCard> findAll() {
-		return dao.findById();
+		return dao.findAll();
 	}
 
 	/**
@@ -39,7 +35,7 @@ public class RentalResource {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Expense findById(@PathParam("id") int id) {
+	public RentalCard findById(@PathParam("id") int id) {
 		return dao.findById(id);
 	}
 
@@ -51,13 +47,13 @@ public class RentalResource {
 	 * @return DB上のIDがセットされた部署情報。失敗した場合IDが0のまま。
 	 * @throws WebApplicationException 入力データチェックに失敗した場合に送出される。
 	 */
-	@POST
+	/** @POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Expense create(Expense expense) throws WebApplicationException {
 		validate(expense);
 		return dao.create(expense);
-	}
+	} */
 
 	/**
 	 * 指定した情報でDBを更新する。
@@ -65,13 +61,13 @@ public class RentalResource {
 	 * @param expense 更新情報を含めた部署情報
 	 * @throws WebApplicationException 入力データチェックに失敗した場合に送出される。
 	 */
-	@PUT
+	/** @PUT
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void update(Expense expense) throws WebApplicationException {
 		validate(expense);
 		dao.update(expense);
-	}
+	} */
 
 	/**
 	 * 指定したIDの部署情報を削除する。
@@ -89,9 +85,9 @@ public class RentalResource {
 	 * @param post 入力データを保持したモデル
 	 * @throws ValidationException 入力データチェックに失敗した場合に送出される。
 	 */
-	private void validate(Expense expense) throws WebApplicationException {
-		if (expense.getName().isEmpty()) {
+	/** private void validate(RentalCard rentalCard) throws WebApplicationException {
+		if (rentalCard.getTitle().isEmpty()) {
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
-	}
+	} */
 }

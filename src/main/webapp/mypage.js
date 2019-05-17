@@ -1,8 +1,8 @@
 'use strict';
 
-var rootUrl = "/java_s04/api/v1.1/rentals";
+var rootUrl = "/teamC/webapi/rentals";
 
-findById();
+findById("mirai_kako");
 
 /** $('#saveExpense').click(function() {
 	var name = $('#name').val();
@@ -42,7 +42,7 @@ function findById(id) {
 		url: rootUrl+'/'+id,
 		dataType: "json",
 		success: function(data) {
-			console.log('findById success: ' + data.name);
+			console.log('findById success: ' + data.title);
 			renderTable(data)
 		}
 	});
@@ -116,23 +116,21 @@ function renderTable(data) {
 	} else {
 		var table = $('<table>').attr('border', 1);
 		table.append(headerRow);
-		$.each(data, function(index, expense) {
+		$.each(data, function(index, rental) {
 			var row = $('<tr>');
-			row.append($('<td>').text(expense.id));
-			row.append($('<td>').text(expense.date));
-			row.append($('<td>').text(expense.name));
-			row.append($('<td>').text(expense.title));
-			row.append($('<td>').text(expense.money));
-			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button").attr("onclick", "findById("+expense.id+')')
-				));
-			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button").attr("onclick", "deleteById("+expense.id+')')
-				));
+			row.append($('<td>').text(rental.title));
+			row.append($('<td>').text(rental.dueDate));
+			row.append($('<td>').text(rental.rentalStatus));
+	//		row.append($('<td>').append(
+	//				$('<button>').text("編集").attr("type","button").attr("onclick", "findById("+rental.id+')')
+	//			));
+	//		row.append($('<td>').append(
+	//				$('<button>').text("返却").attr("type","button").attr("onclick", "deleteById("+rental.id+')')
+	//			));
 			table.append(row);
 		});
 
-		$('#expenses').append(table);
+		$('#rentals').append(table);
 	}
 
 }
@@ -149,8 +147,8 @@ function renderTable(data) {
 */
 
 
-function formToJSON() {
-	var expenseId = $('#expenseId').val();
+/**  function formToJSON() {
+	var rentalId = $('#rentalId').val();
 	return JSON.stringify({
 		"id": (expenseId == "" ? 0 : expenseId),
 		"date": $('#date').val(),
@@ -158,4 +156,4 @@ function formToJSON() {
 		"title": $('#title').val(),
 		"money": $('#money').val()
 	});
-}
+}  */

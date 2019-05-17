@@ -12,7 +12,7 @@ public class RentalCard {
 	private String checkDate;
 	private int alertStatus;
 	private String userId;
-	private int rantalStatus;
+	private int rentalStatus;
 	private String backDate;
 	public int getBookId() {
 		return bookId;
@@ -56,11 +56,11 @@ public class RentalCard {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getRantalStatus() {
-		return rantalStatus;
+	public int getRentalStatus() {
+		return rentalStatus;
 	}
-	public void setRantalStatus(int rantalStatus) {
-		this.rantalStatus = rantalStatus;
+	public void setRentalStatus(int rentalStatus) {
+		this.rentalStatus = rentalStatus;
 	}
 	public String getBackDate() {
 		return backDate;

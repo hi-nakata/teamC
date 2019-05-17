@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 経費データを扱うDAO
+ * 貸出データを扱うDAO
  */
 public class RentalDAO {
 	/**
 	 * クエリ文字列
 	 */
-	private static final String SELECT_ALL_QUERY = "SELECT REQ_ID, REQ_DATE, NAME, TITLE, MONEY FROM EXPENSE ORDER BY REQ_ID";
+	private static final String SELECT_ALL_QUERY = "select B.TITLE,R.DUE_DATE,R.RENTAL_STATUS from BOOK B,RENTAL R,ACCOUNT A where 1=1 and B.BOOK_ID=R.BOOK_ID and R.USER_ID=A.USER_ID and A.USER_ID='mirai_kako' and R.RENTAL_STATUS=1";
 	private static final String SELECT_BY_ID_QUERY = "SELECT REQ_ID, REQ_DATE, NAME, TITLE, MONEY FROM EXPENSE WHERE REQ_ID = ?";
-	private static final String INSERT_QUERY = "INSERT INTO EXPENSE(REQ_DATE, NAME, TITLE, MONEY) VALUES (?,?,?,?)";
-	private static final String UPDATE_QUERY = "UPDATE EXPENSE SET REQ_DATE = ?,NAME = ?,TITLE = ?,MONEY = ? WHERE REQ_ID = ?";
+	//private static final String INSERT_QUERY = "INSERT INTO EXPENSE(REQ_DATE, NAME, TITLE, MONEY) VALUES (?,?,?,?)";
+	//private static final String UPDATE_QUERY = "UPDATE EXPENSE SET REQ_DATE = ?,NAME = ?,TITLE = ?,MONEY = ? WHERE REQ_ID = ?";
 	private static final String DELETE_QUERY = "DELETE FROM EXPENSE WHERE REQ_ID = ?";
 
 	/**
-	 * 経費の全件を取得する。
+	 * 貸出の全件を取得する。
 	 *
-	 * @return DBに登録されている経費データ全件を収めたリスト。途中でエラーが発生した場合は空のリストを返す。
+	 * @return DBに登録されている貸出ステータス１の貸出データ全件を収めたリスト。途中でエラーが発生した場合は空のリストを返す。
 	 */
 	public List<RentalCard> findAll() {
 		List<RentalCard> result = new ArrayList<>();
@@ -88,7 +88,7 @@ public class RentalDAO {
 	 * @param rental 登録対象オブジェクト
 	 * @return DB上のIDがセットされたオブジェクト
 	 */
-	public RentalCard create(RentalCard rental) {
+	/** public RentalCard create(RentalCard rental) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return rental;
@@ -114,7 +114,7 @@ public class RentalDAO {
 		}
 
 		return rental;
-	}
+	} */
 
 	/**
 	 * 指定されたExpenseオブジェクトを使ってDBを更新する。
@@ -122,7 +122,7 @@ public class RentalDAO {
 	 * @param expense 更新対象オブジェクト
 	 * @return 更新に成功したらtrue、失敗したらfalse
 	 */
-	public boolean update(Expense expense) {
+	/** public boolean update(Expense expense) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
@@ -143,7 +143,7 @@ public class RentalDAO {
 		}
 
 		return count == 1;
-	}
+	}  */
 
 	/**
 	 * 指定されたIDのExpenseデータを削除する。
@@ -173,16 +173,14 @@ public class RentalDAO {
 	/**
 	 * 検索結果行をオブジェクトとして構成する。
 	 * @param rs 検索結果が収められているResultSet
-	 * @return 検索結果行の各データを収めたExpenseインスタンス
+	 * @return 検索結果行の各データを収めたRentalCardインスタンス
 	 * @throws SQLException ResultSetの処理中発生した例外
 	 */
-	private Expense processRow(ResultSet rs) throws SQLException {
-		Expense result = new Expense();
-		result.setId(rs.getInt("REQ_ID"));
-		result.setDate(rs.getString("REQ_DATE"));
-		result.setName(rs.getString("NAME"));
+	private RentalCard processRow(ResultSet rs) throws SQLException {
+		RentalCard result = new RentalCard();
 		result.setTitle(rs.getString("TITLE"));
-		result.setMoney(rs.getInt("MONEY"));
+		result.setDueDate(rs.getString("DUE_DATE"));
+		result.setRentalStatus(rs.getInt("RENTAL_STATUS"));
 		return result;
 	}
 }
