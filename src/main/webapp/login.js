@@ -1,4 +1,4 @@
-var rootUrl = "app/tks/accounts";
+var rootUrl = "/teamC/webapi/accounts";
 
 function login(){
 	var fd = new FormData(document.getElementById("loginForm"));
