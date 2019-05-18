@@ -4,16 +4,16 @@ var rootUrl = "/teamC/webapi/rentals";
 
 function displayAll(){
 
-	var id  = "mirai_kako";
-	 location.search.substring( 1, location.search.length );
-	 parameter = decodeURIComponent( parameter );
-	 parameter = parameter.split('=')[1];
+	//var userId  = "mirai_kako";
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
 
-	console.log('displayAll start - id:');
+	console.log('displayAll start - userId:' + userId);
 
 	$.ajax({
 		type : "GET",
-		url : rootUrl,
+		url : rootUrl+ '/'+userId ,
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')
@@ -37,15 +37,29 @@ function displayAll(){
 					row.append($('<td>').text(rental.dueDate));
 					row.append($('<td>').text(rental.rentalStatus));
 					row.append($('<td>').append(
-							$('<button>').text("返却").attr("type","button").attr("onclick", "findById("+rental.bookId+')')
+							$('<button>').text("返却").attr("type","button").attr("onclick", "deleteByBookId("+rental.bookId+')')
 						));
 					row.append($('<td>').append(
-							$('<button>').text("詳細").attr("type","button").attr("onclick", "deleteById("+rental.bookId+')')
+							$('<button>').text("詳細").attr("type","button").attr("onclick", "findByBookId("+rental.bookId+')')
 						));
 					table.append(row);
 				});
 				$('#rentals').append(table);
 			}
+		}
+	});
+}
+
+function deleteByBookId(bookId) {
+	console.log('delete start - bookId:'+bookId);
+	$.ajax({
+		type: "DELETE",
+		url: rootUrl+'/'+bookId,
+		success: function() {
+			displayAll();
+		},
+		error:function(XMLHttpRequest,textStatus, errorThrown){
+			alert('データの通信に失敗');
 		}
 	});
 }

@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 
 public class RentalCard {
+	private int bookId;
 	private String title;
 	private String dueDate;
 	private int rentalStatus;
@@ -33,9 +34,16 @@ public class RentalCard {
 		this.rentalStatus = rentalStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "RentalCard [title=" + title + ", dueDate=" + dueDate + ", rentalStatus=" + rentalStatus + "]";
+	public int getBookId() {
+		return bookId;
 	}
 
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+
+	@Override
+	public String toString() {
+		return "RentalCard [bookId=" + bookId + ", title=" + title + ", dueDate=" + dueDate + ", rentalStatus=" + rentalStatus + "]";
+	}
 }
