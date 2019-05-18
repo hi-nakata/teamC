@@ -37,7 +37,7 @@ function displayAll(){
 					row.append($('<td>').text(rental.dueDate));
 					row.append($('<td>').text(rental.rentalStatus));
 					row.append($('<td>').append(
-							$('<button>').text("返却").attr("type","button").attr("onclick", "deleteByBookId("+rental.bookId+')')
+							$('<button>').text("返却").attr("type","button").attr("onclick", "updateRentalStatus("+rental.bookId+')')
 						));
 					row.append($('<td>').append(
 							$('<button>').text("詳細").attr("type","button").attr("onclick", "findByBookId("+rental.bookId+')')
@@ -50,18 +50,22 @@ function displayAll(){
 	});
 }
 
-function deleteByBookId(bookId) {
-	console.log('delete start - bookId:'+bookId);
+function updateRentalStatus(bookId) {
+	console.log('updateRentalStatus start - bookId:'+ bookId);
 	$.ajax({
-		type: "DELETE",
+		type: "PUT",
+		//contentType: "application/json",
 		url: rootUrl+'/'+bookId,
+		dataType: "json",
+		//data: formToJSON(),
 		success: function() {
+			alert('返却しました');
 			displayAll();
 		},
-		error:function(XMLHttpRequest,textStatus, errorThrown){
-			alert('データの通信に失敗');
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('返却処理に失敗しました');
 		}
-	});
+	})
 }
 
 function goMypage(){

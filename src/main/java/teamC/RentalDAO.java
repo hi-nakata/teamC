@@ -26,6 +26,13 @@ public class RentalDAO {
 					"and R.RENTAL_STATUS(+)=1 ";
 
 
+	private static final String UPDATE_RENTAL =
+					"update  \n" +
+					"RENTAL \n" +
+					"set \n" +
+					"RENTAL_STATUS = 0 \n" +
+					"where \n" +
+					"BOOK_ID = ? ";
 
 
 	public List<RentalCard> allRentals(String userId){
@@ -50,6 +57,31 @@ public class RentalDAO {
 			ConnectionProvider.close(connection);
 		}
 		return result;
+	}
+
+	/**
+	 * 指定されたIDのRentalデータを更新する。
+	 *
+	 * @param id 更新対象のExpenseデータのID
+	 * @return 更新が成功したらtrue、失敗したらfalse
+	 */
+	public boolean update(int bookId) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return false;
+		}
+
+		int count = 0;
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_RENTAL)) {
+			// UPDATE実行
+			statement.setInt(1, bookId);
+			count = statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+		return count == 1;
 	}
 
 	private RentalCard processRow(ResultSet rs) throws SQLException{
