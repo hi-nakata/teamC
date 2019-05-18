@@ -40,7 +40,7 @@ function displayAll(){
 							$('<button>').text("返却").attr("type","button").attr("onclick", "updateRentalStatus("+rental.bookId+')')
 						));
 					row.append($('<td>').append(
-							$('<button>').text("詳細").attr("type","button").attr("onclick", "findByBookId("+rental.bookId+')')
+							$('<button>').text("詳細").attr("type","button").attr("onclick", "goBookDetail("+rental.bookId+')')
 						));
 					table.append(row);
 				});
@@ -68,9 +68,13 @@ function updateRentalStatus(bookId) {
 	})
 }
 
-function goMypage(){
-	location.href ='./MyPage.html'
+function goBookDetail(bookId){
+	location.href ='./BookDetail.html?bookId='+bookId;
 }
+
+/** function goMypage(){
+	location.href ='./MyPage.html'
+} */
 
 function goBookSearch(){
 	location.href ='./BookSearch.html'
@@ -84,7 +88,7 @@ $(document).ready(function () {
 	// 初期表示用
 	displayAll();
 
-	$('#js-btn-mypage').click(goMypage);
+	//$('#js-btn-mypage').click(goMypage);
 	$('#js-btn-search').click(goBookSearch);
 
 });
