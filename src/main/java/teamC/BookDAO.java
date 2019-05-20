@@ -30,9 +30,7 @@ public class BookDAO {
 					"LEFT OUTER JOIN ACCOUNT AC \n" +
 					"ON RE.USER_ID = AC.USER_ID \n" ;
 
-	private static final String INSERT_QUERY = "INSERT INTO \n" +
-			"BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) \n" +
-			"VALUES(?,?,?,?,?); \n";
+	private static final String INSERT_QUERY = "INSERT INTO BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) VALUES(?,?,?,?,?)";
 
 
 
@@ -117,7 +115,7 @@ public class BookDAO {
 			return employee;
 		}
 
-		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "ID" });) {
+		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "BOOK_ID" });) {
 			// INSERT実行
 			setParameter(statement, employee, false);
 			statement.executeUpdate();
