@@ -1,18 +1,18 @@
 'use strict';
 
-var rootUrl = "/teamC/webapi/alerts";
+var rootUrl = "/teamC/webapi/rentals";
 
 function displayAll(){
 
-	var userId = location.search.substring( 1, location.search.length );
-	userId = decodeURIComponent( userId );
-	userId = userId.split('=')[1];
+	var adminId = location.search.substring( 1, location.search.length );
+	adminId = decodeURIComponent( adminId );
+	adminId = adminId.split('=')[1];
 
-	console.log('displayAll start - userId:' + userId);
+	console.log('displayAll start - Id:' + adminId);
 
 	$.ajax({
 		type : "GET",
-		url : rootUrl+ '/'+userId ,
+		url : rootUrl+ '/'+adminId ,
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')

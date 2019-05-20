@@ -23,6 +23,14 @@ public class RentalResource {
 		return dao.allRentals(userId);
 	}
 
+	@GET
+	@Path("{adminId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RentalCard> allAlerts(@PathParam("adminId") String adminId){
+		System.out.println("ok");
+		return dao.allRentals(adminId);
+	}
+
 	@PUT
 	@Path("{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
