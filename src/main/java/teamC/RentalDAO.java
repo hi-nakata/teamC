@@ -50,7 +50,7 @@ public class RentalDAO {
 					"and B.BOOK_ID=R.BOOK_ID(+) \n" +
 					"and R.USER_ID=A.USER_ID(+) \n" +
 					"and R.RENTAL_STATUS(+)='1' \n" +
-					"and TRUNC(SYSDATE) <= R.DUE_DATE ";
+					"and TRUNC(SYSDATE) >= R.DUE_DATE ";
 
 	private static final String UPDATE_ALERT =
 					"update  \n" +
@@ -59,6 +59,18 @@ public class RentalDAO {
 					"ALERT_STATUS = 1 \n" +
 					"where \n" +
 					"BOOK_ID = ? ";
+
+	private static final String INSERT_RENTAL_CARD =
+					"insert into RENTAL \n" +
+					"(BOOK_ID,RENTAL_DATE,DUE_DATE,CHECK_DATE,ALERT_STATUS,USER_ID,RENTAL_STATUS,BACK_DATE) \n" +
+					"values( ? , \n" +
+					"trunc(sysdate), \n" +
+					"trunc(sysdate)+14, \n" +
+					"'20190101', \n" +
+					"'0', \n" +
+					"'mirai_kako', \n" +
+					"'1', \n" +
+					"'20190101') ";
 
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
@@ -74,7 +86,7 @@ public class RentalDAO {
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()){
-				result.add(processRow(rs));
+				result.add(revealRentalCardResultSet(rs));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -96,7 +108,7 @@ public class RentalDAO {
 			ResultSet rs = statement.executeQuery(SELECT_ALL_ALERT);
 
 			while (rs.next()) {
-				result.add(processRow(rs));
+				result.add(unpackRentalCardResultSet(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,12 +169,42 @@ public class RentalDAO {
 		return count == 1;
 	}
 
-	private RentalCard processRow(ResultSet rs) throws SQLException{
+	public boolean create(int bookId) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return false;
+		}
+		int count = 0;
+		try (PreparedStatement statement = connection.prepareStatement(INSERT_RENTAL_CARD)) {
+			// INSERT実行
+			statement.setInt(1, bookId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return count == 1;
+	}
+
+	private RentalCard revealRentalCardResultSet(ResultSet rs) throws SQLException{
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("TITLE"));
 		result.setDueDate(rs.getString("DUE_DATE"));
 		result.setRentalStatus(rs.getInt("RENTAL_STATUS"));
+		return result;
+
+	}
+
+	private RentalCard unpackRentalCardResultSet(ResultSet rs) throws SQLException{
+		RentalCard result = new RentalCard();
+		result.setBookId(rs.getInt("BOOK_ID"));
+		result.setDueDate(rs.getString("DUE_DATE"));
+		result.setTitle(rs.getString("TITLE"));
+		result.setEmployeeName(rs.getString("EMPLOYEE_NAME"));
+		result.setAlertStatus(rs.getInt("ALERT_STATUS"));
 		return result;
 
 	}

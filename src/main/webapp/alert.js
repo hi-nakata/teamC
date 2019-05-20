@@ -36,6 +36,7 @@ function displayAll(){
 							$('<button>').text("メール送信").attr("type","button").attr("onclick", "updateAlertStatus("+alert.bookId+')')
 						));
 					table.append(row);
+					console.log(alert.alertStatus);
 				});
 				$('#alerts').append(table);
 			}
@@ -43,17 +44,16 @@ function displayAll(){
 	});
 }
 
-function updateAlertStatus(bookNm) {
-	console.log('updateAlertStatus start - bookNm:'+ bookNm);
+function updateAlertStatus(bookId) {
+	console.log('updateAlertStatus start - bookId:'+ bookId);
 	$.ajax({
 		type: "PUT",
-		//contentType: "application/json",
-		url: rootUrl+'/'+bookNm,
+		url: rootUrl+'/alertStatus/'+bookId,
 		dataType: "json",
-		//data: formToJSON(),
 		success: function() {
 			alert('催促しました');
 			displayAll();
+			//location.href ='./Alert.html'
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			alert('催促処理に失敗しました');
