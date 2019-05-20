@@ -6,12 +6,11 @@ var rootUrl = "/teamC/webapi/books";
 
 
 
-
 /*すべての本を一覧表示する機能*/
 function displayAll(){
 	console.log('displayAll start.');
 
-	var rootUrlInit = rootUrl + '?titleParam=';
+	var rootUrlInit = rootUrl+'/findAll';
 	$.ajax({
 		type : "GET",
 		url : rootUrlInit,
@@ -57,15 +56,12 @@ function displayAll(){
 
 					if(check == 1){
 						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true")));
-						row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
-						//.attr("onclick","ここにクリックしたときのfunctionを書く")
+						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}else{
 
 						row.append($('<td>').append($('<button>').text("貸出").attr("type","button")));
 						//.atter("onclick","ここにクリックしたときのfunctionを書く")
-						row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
-						//.attr("onclick","ここにクリックしたときのfunctionを書く")
-
+						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}
 					table.append(row)
 				});
@@ -104,6 +100,7 @@ function findByParam(){
 
 				$.each(json,function(index,book){
 					var row = $('<tr>')
+
 					row.append($('<td>').text(book.title));
 					row.append($('<td>').text(book.author));
 					row.append($('<td>').text(book.publisher));
@@ -123,20 +120,17 @@ function findByParam(){
 
 					var check = book.rentalStatus;
 					console.log("貸出ステータス:",check);
-					console.log("検索中")
+					console.log("検索中");
 
-
+					var id = book.id;
+					console.log(id);
 					if(check == 1){
 						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true")));
-						row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
-						//.attr("onclick","ここにクリックしたときのfunctionを書く")
+						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}else{
 
-						row.append($('<td>').append($('<button>').text("貸出").attr("type","button")));
-						//.atter("onclick","ここにクリックしたときのfunctionを書く")
-						row.append($('<td>').append($('<button>').text("詳細").attr("type","button")));
-						//.attr("onclick","ここにクリックしたときのfunctionを書く")
-
+						row.append($('<td>').append($('<button>').text("貸出").attr("type","button").attr("onclick","goDetail("+book.id+')')));
+						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}
 					table.append(row)
 				});
@@ -147,9 +141,29 @@ function findByParam(){
 	})
 }
 
+//本の貸出を行う機能
+function tryRental(){
+	console.log('tryRental start.');
+
+	$.ajax({
+		type : POST,
+
+
+
+
+
+
+
+
+
+	})
+}
+
 //本の詳細ページに移動する機能
-function goDetail(bookId){
-	location.href = './BookDetail.html?bookId='+bookId;
+function goDetail(id){
+	var t = id
+	console.log(t);
+	location.href = './BookDetail.html?bookId='+id;
 
 }
 
@@ -160,6 +174,8 @@ $(document).ready(function () {
 	$('#searchBtn').bind('click',displayAll);
 
 	$('#js-btn-search').click(findByParam);
+
+	$('#js-btn-detail').click(goDetail);
 
 	// 初期表示用
 	displayAll();

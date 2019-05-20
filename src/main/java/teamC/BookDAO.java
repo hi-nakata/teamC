@@ -85,6 +85,7 @@ public class BookDAO {
 /**本のSQLデータ取得**/
 	private Book processRow(ResultSet rs) throws SQLException{
 		Book result = new Book();
+		result.setId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("title"));
 		result.setAuthor(rs.getString("author"));
 		result.setPublisher(rs.getString("PUBLISHER"));

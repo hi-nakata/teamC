@@ -3,6 +3,24 @@
 var rootUrl =  "/teamC/webapi/categories";
 
 
+$('saveCat').click(function(){
+
+	var catName = $('catName').val();
+	if(catName === ''){
+		$('.error').text('名前は必須入力です。');
+		return false;
+	}else{
+		$('.error').text('');
+	}
+
+	var catId = $('#catId').val()
+	if(id=='')
+		addCat
+		else
+			updateCat(catId)
+			return false
+})
+
 
 
 function findAll(){
@@ -34,10 +52,10 @@ function renderTable(data) {
 			row.append($('<td>').text(cate.categoryName));
 			row.append($('<td>').append(
 					$('<button>').text("編集").attr("type","button")
-				));
+			));
 			row.append($('<td>').append(
 					$('<button>').text("削除").attr("type","button")
-				));
+			));
 			table.append(row);
 		});
 
