@@ -4,7 +4,6 @@ var rootUrl = "/teamC/webapi/rentals";
 
 function displayAll(){
 
-	//var userId  = "mirai_kako";
 	var userId = location.search.substring( 1, location.search.length );
 	userId = decodeURIComponent( userId );
 	userId = userId.split('=')[1];
@@ -80,7 +79,13 @@ function goBookSearch(){
 	location.href ='./BookSearch.html'
 }
 
+function goAlert(bookId){
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
 
+	location.href ='./Alert.html?userId='+userId;
+}
 
 $(document).ready(function () {
 	'use strict';
@@ -90,5 +95,6 @@ $(document).ready(function () {
 
 	//$('#js-btn-mypage').click(goMypage);
 	$('#js-btn-search').click(goBookSearch);
+	$('#js-href-alert').click(goAlert);
 
 });

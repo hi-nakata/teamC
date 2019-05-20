@@ -31,3 +31,6 @@ public class RentalResource {
 		dao.update(bookId);
 	}
 }
+
+
+
