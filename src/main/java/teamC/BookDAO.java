@@ -13,15 +13,10 @@ public class BookDAO {
 	/**クエリ文字列**/
 
 	private static final String SELECT_ALL_BOOK =
-			"select  \n" +
-					"BO.TITLE ,BO.AUTHOR  \n" +
-					",BO.PUBLISHER  \n" +
-					",BO.SHELF  \n" +
-					",RE.RENTAL_STATUS  \n" +
-					",AC.EMPLOYEE_NAME  \n" +
-					",RE.DUE_DATE \n" +
+			"select \n" +
+					"* \n" +
 					" \n" +
-					"from  \n" +
+					"from \n" +
 					"BOOK BO \n" +
 					" \n" +
 					"LEFT OUTER JOIN RENTAL RE \n" +
@@ -30,9 +25,7 @@ public class BookDAO {
 					"LEFT OUTER JOIN ACCOUNT AC \n" +
 					"ON RE.USER_ID = AC.USER_ID \n" ;
 
-	private static final String INSERT_QUERY = "INSERT INTO \n" +
-			"BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) \n" +
-			"VALUES(?,?,?,?,?); \n";
+	private static final String INSERT_QUERY = "INSERT INTO BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) VALUES(?,?,?,?,?)";
 
 
 
@@ -90,6 +83,7 @@ public class BookDAO {
 /**本のSQLデータ取得**/
 	private Book processRow(ResultSet rs) throws SQLException{
 		Book result = new Book();
+		result.setId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("title"));
 		result.setAuthor(rs.getString("author"));
 		result.setPublisher(rs.getString("PUBLISHER"));
@@ -117,9 +111,9 @@ public class BookDAO {
 			return employee;
 		}
 
-		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "ID" });) {
+		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "BOOK_ID" });) {
 			// INSERT実行
-			setParameter(statement, employee, false);
+//			setParameter(statement, employee, false);
 			statement.executeUpdate();
 
 			// INSERTできたらKEYを取得
@@ -144,6 +138,7 @@ public class BookDAO {
 	 * @param forUpdate 更新に使われるならtrueを、新規追加に使われるならfalseを指定する。
 	 * @throws SQLException パラメータ展開時に何らかの問題が発生した場合に送出される。
 	 */
+
 	private void setParameter(PreparedStatement statement, Book employee, boolean forUpdate) throws SQLException {
 		int count = 1;
 
@@ -157,6 +152,7 @@ public class BookDAO {
 		if (forUpdate) {
 			statement.setInt(count++, employee.getId());
 		}
-	}
+
+}
 
 }

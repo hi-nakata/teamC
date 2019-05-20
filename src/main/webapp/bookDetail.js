@@ -1,6 +1,18 @@
 var rootUrl = "/teamC/webapi/books";
 
+var bookId = location.search.substring( 1, location.search.length );
+bookId = decodeURIComponent( bookId );
+bookId = bookId.split('=')[1];
+
+//console.log('displayAll start - userId:' + userId);
+
 $(document).ready(function () {
+
+	if (bookId === undefined)
+		console.log("hage")
+	else
+		fillEditData(bookId);
+
 	$('#form-btn-regist').click(function() {
 		$('.error').children().remove();//error出力欄をリセット
 		if ($('#name').val() === '') {
@@ -34,20 +46,39 @@ $(document).ready(function () {
 			return false;
 		}
 
-		addBook();
-//		var id = $('#id').val()//保存ボタンを押したときUrlパラメータにIDがなければ追加、あれば更新
-//		if (id === '')
-//			addBook();
-//		else
-//			updateBook(id);
+		if (bookId === undefined)
+			addBook();
+		else
+			updateBook(bookId);
 		return false;
 	})
 });
+
+function fillEditData(id){
+
+	//bookテーブルからbookIdで情報をとってきてinputのvalueにつめる
+	var rootUrlInit = rootUrl + '?bookIdParam='+ id;
+	$.ajax({
+		type : "GET",
+		url : rootUrlInit,
+		dataType : "json",
+		success : function(json){
+			console.log('通信に成功しました。')
+			console.log(json);
+			//inputにつめる
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert('社員データの追加に失敗しました');
+		}
+	});
+
+}
 
 function addBook() {
 	console.log('addBook start');
 
 	var fd = new FormData(document.getElementById("book-detail"));
+
 
 	$.ajax({
 		url : rootUrl,
@@ -58,7 +89,7 @@ function addBook() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			alert('社員データの追加に成功しました');
-			location.href ='./bookDetail.html'
+			location.href ='./BookDetail.html'
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
@@ -80,8 +111,7 @@ function updateBook(id) {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			alert('社員データの更新に成功しました');
-			findAll();
-			renderDetails(data);
+			location.href ='./bookDetail.html'
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの更新に失敗しました');
