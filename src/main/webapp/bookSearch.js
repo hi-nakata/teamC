@@ -10,9 +10,11 @@ var rootUrl = "/teamC/webapi/books";
 /*すべての本を一覧表示する機能*/
 function displayAll(){
 	console.log('displayAll start.');
+
+	var rootUrlInit = rootUrl + '?titleParam=';
 	$.ajax({
 		type : "GET",
-		url : rootUrl,
+		url : rootUrlInit,
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')
@@ -78,7 +80,8 @@ function displayAll(){
 function findByParam(){
 	console.log('findByParam start.')
 
-	var urlWithParam = rootUrl + '?titleParam='+$('#titleParam').val();
+	var urlWithParam = rootUrl + '?titleParam='+'%'+$('#titleParam').val()+'%';
+	console.log('titleParam:',titleParam);
 	$.ajax({
 		type : "GET",
 		url : urlWithParam,
@@ -142,6 +145,11 @@ function findByParam(){
 			}
 		}
 	})
+}
+
+//本の詳細ページに移動する機能
+function detailTranse(){
+
 }
 
 $(document).ready(function () {
