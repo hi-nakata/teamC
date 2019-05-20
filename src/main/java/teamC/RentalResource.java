@@ -38,7 +38,7 @@ public class RentalResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void create(@PathParam("id") int id){
 		System.out.println("貸出");
-		dao.create(id);
+		dao.rental(id);
 	}
 
 	@PUT
@@ -46,7 +46,7 @@ public class RentalResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void updateRentalStatus(@PathParam("bookId") int bookId){
 		System.out.println("返却");
-		dao.updateRentalStatus(bookId);
+		dao.returnBook(bookId);
 	}
 
 	@PUT
@@ -54,7 +54,7 @@ public class RentalResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void updateAlertStatus(@PathParam("bookId") int bookId){
 		System.out.println("催促");
-		dao.updateAlertStatus(bookId);
+		dao.alert(bookId);
 	}
 }
 

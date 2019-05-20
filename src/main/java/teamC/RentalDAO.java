@@ -125,7 +125,7 @@ public class RentalDAO {
 	 * @param id 更新対象のbookデータのID
 	 * @return 更新が成功したらtrue、失敗したらfalse
 	 */
-	public boolean updateRentalStatus(int bookId) {
+	public boolean returnBook(int bookId) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
@@ -150,7 +150,7 @@ public class RentalDAO {
 	 * @param id 更新対象のbookデータのID
 	 * @return 更新が成功したらtrue、失敗したらfalse
 	 */
-	public boolean updateAlertStatus(int bookId) {
+	public boolean alert(int bookId) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
@@ -169,7 +169,7 @@ public class RentalDAO {
 		return count == 1;
 	}
 
-	public boolean create(int bookId) {
+	public boolean rental(int bookId) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
