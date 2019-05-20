@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-
+@Path("categories")
 public class CategoryResource {
 	private final CategoryDAO dao = new CategoryDAO();
 
@@ -23,6 +23,7 @@ public class CategoryResource {
 	 * 一覧用にカテゴリ情報を全件取得する。
 	 * @return カテゴリ情報のリストをJSON形式で返す。
 	 */
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Category> findAll() {
@@ -89,7 +90,7 @@ public class CategoryResource {
 	 * @throws ValidationException 入力データチェックに失敗した場合に送出される。
 	 */
 	private void validate(Category category) throws WebApplicationException {
-		if (category.getName().isEmpty()) {
+		if (category.getCategoryName().isEmpty()) {
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
 	}

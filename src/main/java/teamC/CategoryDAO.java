@@ -15,7 +15,10 @@ public class CategoryDAO {
 
 	/**クエリ文字列**/
 
-	private static final String SELECT_ALL_QUERY ="";
+	private static final String SELECT_ALL_QUERY ="select \n" +
+			"* \n" +
+			"from \n" +
+			"CATEGORY";
 	private static final String SELECT_BY_ID_QUERY="";
 	private static final String INSERT_QUERY="";
 	private static final String UPDATE_QUERY="";
@@ -23,37 +26,38 @@ public class CategoryDAO {
 
 	/**カテゴリ全件取得**/
 	public List<Category> findAll(){
-		List<Category>result = new ArrayList<>();
+		List<Category> result = new ArrayList<>();
 
-		Connection connection =ConnctionProvider.getConnection();
-				if(connection == null){
-					return result;
-				}
+		Connection connection = ConnectionProvider.getConnection();
+		if(connection == null){
+			return result;
+		}
 
 		try(Statement statement = connection.createStatement();){
 			ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
 
 			while(rs.next()){
 				result.add(processRow(rs));
-			}catch(SQLException e){
-				e.printStackTrace();
-			}finally{
-				ConnectionPrivider.close(connection);
 			}
-			return result;
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionProvider.close(connection);
 		}
+		return result;
 	}
+
 
 
 	/**id指定の検索実施**/
 	public Category findById(int id){
 
 		Category result = null;
-		Connetion connection =ConnctionProvider.getConnection();
-				if(connection == null){
-					return result;
-				}
-		try(PreparedStatement statement = connection.prepareStaement(SELECT_BY_ID_QWERY)){
+		Connection connection =ConnectionProvider.getConnection();
+		if(connection == null){
+			return result;
+		}
+		try(PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY)){
 			statement.setInt(1,id);
 
 			ResultSet rs =statement.executeQuery();
@@ -78,14 +82,14 @@ public class CategoryDAO {
 
 		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "ID" });) {
 			// INSERT実行
-			statement.setString(1, category.getName());
+			statement.setString(1, category.getCategoryName());
 			statement.executeUpdate();
 
 			// INSERTできたらKEYを取得
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int id = rs.getInt(1);
-			category.setId(id);
+			category.setCategoryId(id);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -104,8 +108,8 @@ public class CategoryDAO {
 
 		int count = 0;
 		try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
-			statement.setString(1, category.getName());
-			statement.setInt(2, category.getId());
+			statement.setString(1, category.getCategoryName());
+			statement.setInt(2, category.getCategoryId());
 			count = statement.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -140,9 +144,11 @@ public class CategoryDAO {
 
 	private Category processRow(ResultSet rs) throws SQLException{
 		Category result = new Category();
-
-
+		result.setCategoryId(rs.getInt("CAT_ID"));
+		result.setCategoryName(rs.getString("CAT_NAME"));
 		return result;
 	}
+
+
 
 }
