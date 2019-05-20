@@ -145,11 +145,12 @@ function tryRental(id){
 	console.log('tryRental start.');
 
 	$.ajax({
-		type : POST,
+		type : 'POST',
 		url:  "/teamC/webapi/rentals"+"/"+id,
 		dataType : "json" ,
 		success : function(){
-			alert('貸し出しました')
+			alert('貸し出しました');
+			displayAll();
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
