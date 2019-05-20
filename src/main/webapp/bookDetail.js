@@ -1,6 +1,15 @@
 var rootUrl = "/teamC/webapi/books";
 
+var bookId = location.search.substring( 1, location.search.length );
+bookId = decodeURIComponent( bookId );
+bookId = bookId.split('=')[1];
+
+console.log('displayAll start - userId:' + userId);
+
 $(document).ready(function () {
+
+	fillEditData();
+
 	$('#form-btn-regist').click(function() {
 		$('.error').children().remove();//error出力欄をリセット
 		if ($('#name').val() === '') {
@@ -35,14 +44,17 @@ $(document).ready(function () {
 		}
 
 		addBook();
-//		var id = $('#id').val()//保存ボタンを押したときUrlパラメータにIDがなければ追加、あれば更新
-//		if (id === '')
-//			addBook();
-//		else
-//			updateBook(id);
+		if (bookId === '')
+			addBook();
+		else
+			updateBook(bookId);
 		return false;
 	})
 });
+
+function fillEditData(){
+	//bookテーブルからbookIdで情報をとってきてinputのvalueにつめる
+}
 
 function addBook() {
 	console.log('addBook start');
@@ -80,8 +92,7 @@ function updateBook(id) {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			alert('社員データの更新に成功しました');
-			findAll();
-			renderDetails(data);
+			location.href ='./bookDetail.html'
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの更新に失敗しました');
