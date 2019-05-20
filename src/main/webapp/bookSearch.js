@@ -55,12 +55,11 @@ function displayAll(){
 
 
 					if(check == 1){
-						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true")));
+						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true").attr("onclick","tryRental("+book.id+')')));
 						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}else{
 
-						row.append($('<td>').append($('<button>').text("貸出").attr("type","button")));
-						//.atter("onclick","ここにクリックしたときのfunctionを書く")
+						row.append($('<td>').append($('<button>').text("貸出").attr("type","button").attr("onclick","tryRental("+book.id+')')));
 						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}
 					table.append(row)
@@ -125,11 +124,11 @@ function findByParam(){
 					var id = book.id;
 					console.log(id);
 					if(check == 1){
-						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true")));
+						row.append($('<td>').append($('<button>').text("貸出").attr("disabled","true").attr("onclick","tryRental("+book.id+')')));
 						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}else{
 
-						row.append($('<td>').append($('<button>').text("貸出").attr("type","button").attr("onclick","goDetail("+book.id+')')));
+						row.append($('<td>').append($('<button>').text("貸出").attr("type","button").attr("onclick","tryRental("+book.id+')')));
 						row.append($('<td>').append($('<button>').text("詳細").attr("type","button").attr("onclick","goDetail("+book.id+')')));
 					}
 					table.append(row)
@@ -142,19 +141,18 @@ function findByParam(){
 }
 
 //本の貸出を行う機能
-function tryRental(){
+function tryRental(id){
 	console.log('tryRental start.');
 
 	$.ajax({
 		type : POST,
-
-
-
-
-
-
-
-
+		url:  "/teamC/webapi/rentals"+"/"+id,
+		dataType : "json" ,
+		success : function(){
+			alert('貸し出しました')
+		},error: function(jqXHR, textStatus, errorThrown){
+			alert('貸出処理に失敗しました。')
+		}
 
 	})
 }
