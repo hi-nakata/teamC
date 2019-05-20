@@ -1,3 +1,5 @@
+var rootUrl = "/teamC/webapi/books";
+
 $(document).ready(function () {
 	$('#form-btn-regist').click(function() {
 		$('.error').children().remove();//error出力欄をリセット
@@ -32,11 +34,12 @@ $(document).ready(function () {
 			return false;
 		}
 
-		var id = $('#id').val()//保存ボタンを押したときUrlパラメータにIDがなければ追加、あれば更新
-		if (id === '')
-			addBook();
-		else
-			updateBook(id);
+		addBook();
+//		var id = $('#id').val()//保存ボタンを押したときUrlパラメータにIDがなければ追加、あれば更新
+//		if (id === '')
+//			addBook();
+//		else
+//			updateBook(id);
 		return false;
 	})
 });

@@ -1,7 +1,6 @@
 package teamC;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,9 +86,6 @@ public class BookDAO {
 		return result;
 	}
 
-
-
-
 /**本のSQLデータ取得**/
 	private Book processRow(ResultSet rs) throws SQLException{
 		Book result = new Book();
@@ -150,25 +146,12 @@ public class BookDAO {
 	private void setParameter(PreparedStatement statement, Book employee, boolean forUpdate) throws SQLException {
 		int count = 1;
 
-		statement.setString(count++, employee.getEmpId());
-		statement.setString(count++, employee.getName());
-		statement.setInt(count++, employee.getAge());
-		statement.setInt(count++, employee.getGender().ordinal());
-		statement.setInt(count++, employee.getPhotoId());
-		statement.setString(count++, employee.getZip());
-		statement.setString(count++, employee.getPref());
-		statement.setString(count++, employee.getAddress());
-		statement.setInt(count++, employee.getPost().getId());
-		if (employee.getEnterDate() != null) {
-			statement.setDate(count++, Date.valueOf(employee.getEnterDate()));
-		} else {
-			statement.setDate(count++, null);
-		}
-		if (employee.getRetireDate() != null) {
-			statement.setDate(count++, Date.valueOf(employee.getRetireDate()));
-		} else {
-			statement.setDate(count++, null);
-		}
+		statement.setString(count++, employee.getTitle());
+		statement.setString(count++, employee.getAuthor());
+		statement.setString(count++, employee.getPublisher());
+		statement.setString(count++, employee.getPubdate());
+		statement.setString(count++, employee.getShelf());
+
 
 		if (forUpdate) {
 			statement.setInt(count++, employee.getId());
