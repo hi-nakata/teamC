@@ -4,15 +4,11 @@ var rootUrl = "/teamC/webapi/rentals";
 
 function displayAll(){
 
-	var adminId = location.search.substring( 1, location.search.length );
-	adminId = decodeURIComponent( adminId );
-	adminId = adminId.split('=')[1];
-
-	console.log('displayAll start - Id:' + adminId);
+	console.log('displayAll start ');
 
 	$.ajax({
 		type : "GET",
-		url : rootUrl+ '/'+adminId ,
+		url : rootUrl,
 		dataType : "json",
 		success : function(json){
 			console.log('通信に成功しました。')
@@ -30,14 +26,14 @@ function displayAll(){
 
 				table.append(headerRow);
 
-				$.each(json,function(index,rental){
+				$.each(json,function(index,alert){
 					var row = $('<tr>')
-					row.append($('<td>').text(rental.dueDate));
-					row.append($('<td>').text(rental.title));
-					row.append($('<td>').text(rental.employeeName));
-					row.append($('<td>').text(rental.alertStatus));
+					row.append($('<td>').text(alert.dueDate));
+					row.append($('<td>').text(alert.title));
+					row.append($('<td>').text(alert.employeeName));
+					row.append($('<td>').text(alert.alertStatus));
 					row.append($('<td>').append(
-							$('<button>').text("メール送信").attr("type","button").attr("onclick", "updateAlertStatus("+rental.bookId+')')
+							$('<button>').text("メール送信").attr("type","button").attr("onclick", "updateAlertStatus("+alert.bookId+')')
 						));
 					table.append(row);
 				});
@@ -47,12 +43,12 @@ function displayAll(){
 	});
 }
 
-function updateAlertStatus(bookId) {
-	console.log('updateAlertStatus start - bookId:'+ bookId);
+function updateAlertStatus(bookNm) {
+	console.log('updateAlertStatus start - bookNm:'+ bookNm);
 	$.ajax({
 		type: "PUT",
 		//contentType: "application/json",
-		url: rootUrl+'/'+bookId,
+		url: rootUrl+'/'+bookNm,
 		dataType: "json",
 		//data: formToJSON(),
 		success: function() {
