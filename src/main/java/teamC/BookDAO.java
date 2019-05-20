@@ -1,6 +1,7 @@
 package teamC;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,23 +14,26 @@ public class BookDAO {
 	/**クエリ文字列**/
 
 	private static final String SELECT_ALL_BOOK =
-			"select \n" +
-			"BO.TITLE \n" +
-			",BO.AUTHOR \n" +
-			",BO.PUBLISHER \n" +
-			",BO.SHELF \n" +
-			",RE.RENTAL_STATUS \n" +
-			",AC.EMPLOYEE_NAME \n" +
-			",RE.DUE_DATE \n" +
-			"from  \n" +
-			"BOOK BO, \n" +
-			"RENTAL RE, \n" +
-			"ACCOUNT AC \n" +
-			"where \n" +
-			"1=1 \n" +
-			"and RE.RENTAL_STATUS (+) = '1' \n" +
-			"and BO.BOOK_ID = RE.BOOK_ID(+) \n" +
-			"and RE.USER_ID = AC.USER_ID(+)";
+			"select  \n" +
+					"BO.TITLE ,BO.AUTHOR  \n" +
+					",BO.PUBLISHER  \n" +
+					",BO.SHELF  \n" +
+					",RE.RENTAL_STATUS  \n" +
+					",AC.EMPLOYEE_NAME  \n" +
+					",RE.DUE_DATE \n" +
+					" \n" +
+					"from  \n" +
+					"BOOK BO \n" +
+					" \n" +
+					"LEFT OUTER JOIN RENTAL RE \n" +
+					"ON BO.BOOK_ID = RE.BOOK_ID \n" +
+					" \n" +
+					"LEFT OUTER JOIN ACCOUNT AC \n" +
+					"ON RE.USER_ID = AC.USER_ID \n" ;
+	private static final String INSERT_QUERY = "INSERT INTO \n" +
+			"BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) \n" +
+			"VALUES(?,?,?,?,?); \n";
+
 
 
 	/**本のデータすべてを取得する**/
@@ -99,6 +103,76 @@ public class BookDAO {
 
 		return result;
 
+	}
+
+
+	/**
+	 * 指定されたEmployeeオブジェクトを新規にDBに登録する。
+	 * 登録されたオブジェクトにはDB上のIDが上書きされる。
+	 * 何らかの理由で登録に失敗した場合、IDがセットされない状態（=0）で返却される。
+	 *
+	 * @param Employee 登録対象オブジェクト
+	 * @return DB上のIDがセットされたオブジェクト
+	 */
+	public Book create(Book employee) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return employee;
+		}
+
+		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "ID" });) {
+			// INSERT実行
+			setParameter(statement, employee, false);
+			statement.executeUpdate();
+
+			// INSERTできたらKEYを取得
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int id = rs.getInt(1);
+			employee.setId(id);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return employee;
+	}
+
+	/**
+	 * オブジェクトからSQLにパラメータを展開する。
+	 *
+	 * @param statement パラメータ展開対象のSQL
+	 * @param employee パラメータに対して実際の値を供給するオブジェクト
+	 * @param forUpdate 更新に使われるならtrueを、新規追加に使われるならfalseを指定する。
+	 * @throws SQLException パラメータ展開時に何らかの問題が発生した場合に送出される。
+	 */
+	private void setParameter(PreparedStatement statement, Book employee, boolean forUpdate) throws SQLException {
+		int count = 1;
+
+		statement.setString(count++, employee.getEmpId());
+		statement.setString(count++, employee.getName());
+		statement.setInt(count++, employee.getAge());
+		statement.setInt(count++, employee.getGender().ordinal());
+		statement.setInt(count++, employee.getPhotoId());
+		statement.setString(count++, employee.getZip());
+		statement.setString(count++, employee.getPref());
+		statement.setString(count++, employee.getAddress());
+		statement.setInt(count++, employee.getPost().getId());
+		if (employee.getEnterDate() != null) {
+			statement.setDate(count++, Date.valueOf(employee.getEnterDate()));
+		} else {
+			statement.setDate(count++, null);
+		}
+		if (employee.getRetireDate() != null) {
+			statement.setDate(count++, Date.valueOf(employee.getRetireDate()));
+		} else {
+			statement.setDate(count++, null);
+		}
+
+		if (forUpdate) {
+			statement.setInt(count++, employee.getId());
+		}
 	}
 
 }
