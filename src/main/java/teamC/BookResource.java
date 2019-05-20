@@ -33,8 +33,9 @@ public class BookResource {
 	/**本の検索機能の実装**/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Book> findByParam(@QueryParam("titleParam") String titleParam){
-		Param param = new Param(titleParam);
+	public List<Book> findByParam(@QueryParam("titleParam") String titleParam,
+			@QueryParam("bookIdParam") int idParam){
+		Param param = new Param(titleParam,idParam);
 		return dao.findByParam(param);
 
 	}

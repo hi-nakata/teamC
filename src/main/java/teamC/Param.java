@@ -10,9 +10,11 @@ public class Param {
 	private final static String BASE_WHERE_CLAUSE = " WHERE ";
 
 	private String titleParam;
+	private int idParam;
 
-	public Param(String titleParam){
+	public Param(String titleParam,int idParam){
 		this.setTitleParam(titleParam);
+		this.setIdParam(idParam);
 	}
 
 	public String getTitleParam() {
@@ -37,6 +39,15 @@ public class Param {
 			}
 			whereClause.append("BO.TITLE LIKE ?");
 		}
+		if(idParam != 0){
+			if(whereClause.length() == 0){
+				whereClause.append(BASE_WHERE_CLAUSE);
+
+			}else{
+				whereClause.append(" AND ");
+			}
+			whereClause.append("BO.BOOK_ID LIKE ?");
+		}
 		return whereClause.toString();
 
 	}
@@ -45,6 +56,17 @@ public class Param {
 		if(!titleParam.isEmpty()){
 			statement.setString(count++, titleParam);
 		}
+		if(idParam != 0){
+			statement.setInt(count++, idParam);
+		}
+	}
+
+	public int getIdParam() {
+		return idParam;
+	}
+
+	public void setIdParam(int idParam) {
+		this.idParam = idParam;
 	}
 
 //	private int postId;
