@@ -148,7 +148,8 @@ function findByParam(){
 }
 
 //本の詳細ページに移動する機能
-function detailTranse(){
+function goDetail(bookId){
+	location.href = './BookDetail.html?bookId='+bookId;
 
 }
 
