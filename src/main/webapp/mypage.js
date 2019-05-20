@@ -1,161 +1,100 @@
 'use strict';
 
-var rootUrl = "/java_s04/api/v1.1/rentals";
+var rootUrl = "/teamC/webapi/rentals";
 
-findById();
+function displayAll(){
 
-/** $('#saveExpense').click(function() {
-	var name = $('#name').val();
-	if (name === '') {
-		$('.error').text('名前は必須入力です。');
-		return false;
-	} else {
-		$('.error').text('');
-	}
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
 
-	var id = $('#expenseId').val()
-	if (id == '')
-		addExpense();
-	else
-		updateExpense(id);
-	return false;
-}) */
+	console.log('displayAll start - userId:' + userId);
 
-/** $('#newExpense').click(function() {
-	renderDetails({});
-});  */
-
- /** function findAll(){
-	console.log('findAll start.')
 	$.ajax({
-		type: "GET",
-		url: rootUrl,
-		dataType: "json",
-		success: renderTable
-	});
-}  */
+		type : "GET",
+		url : rootUrl+ '/'+userId ,
+		dataType : "json",
+		success : function(json){
+			console.log('通信に成功しました。')
+			console.log(json);
 
-function findById(id) {
-	console.log('findByID start - id:'+id);
-	$.ajax({
-		type: "GET",
-		url: rootUrl+'/'+id,
-		dataType: "json",
-		success: function(data) {
-			console.log('findById success: ' + data.name);
-			renderTable(data)
+			var headerRow='<tr><th>タイトル</th><th>返却予定日</th><th>ステータス</th>'
+				+'<th></th><th></th></tr>';
+
+			$('#rentals').children().remove();
+
+			if(json.length === 0){
+				$('#rentals').append('<p>現在データが存在していません。</p>')
+			}else{
+				var table = $('<table>');
+
+				table.append(headerRow);
+
+				$.each(json,function(index,rental){
+					var row = $('<tr>')
+					row.append($('<td>').text(rental.title));
+					row.append($('<td>').text(rental.dueDate));
+					row.append($('<td>').text(rental.rentalStatus));
+					row.append($('<td>').append(
+							$('<button>').text("返却").attr("type","button").attr("onclick", "updateRentalStatus("+rental.bookId+')')
+						));
+					row.append($('<td>').append(
+							$('<button>').text("詳細").attr("type","button").attr("onclick", "goBookDetail("+rental.bookId+')')
+						));
+					table.append(row);
+				});
+				$('#rentals').append(table);
+			}
 		}
 	});
 }
 
-/** function addExpense() {
-	console.log('addExpense start');
-	$.ajax({
-		type: "POST",
-		contentType: "application/json",
-		url: rootUrl,
-		dataType: "json",
-		data: formToJSON(),
-		success: function(data, textStatus, jqXHR) {
-			alert('経費データの追加に成功しました');
-			$('#expenseId').val(data.id);
-			findAll();
-		},
-		error: function(jqXHR, textStatus, errorThrown){
-			alert('経費データの追加に失敗しました');
-		}
-	})
-}  */
-
-/** function updateExpense(id) {
-	console.log('updateExpense start');
+function updateRentalStatus(bookId) {
+	console.log('updateRentalStatus start - bookId:'+ bookId);
 	$.ajax({
 		type: "PUT",
-		contentType: "application/json",
-		url: rootUrl+'/'+id,
+		//contentType: "application/json",
+		url: rootUrl+'/'+bookId,
 		dataType: "json",
-		data: formToJSON(),
-		success: function(data, textStatus, jqXHR) {
-			alert('経費データの更新に成功しました');
-			findAll();
+		//data: formToJSON(),
+		success: function() {
+			alert('返却しました');
+			displayAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('経費データの更新に失敗しました');
+			alert('返却処理に失敗しました');
 		}
 	})
-}  */
-
-
-/** function deleteById(id) {
-	console.log('delete start - id:'+id);
-	$.ajax({
-		type: "DELETE",
-		url: rootUrl+'/'+id,
-		success: function() {
-			findAll();
-			$('#expenseId').val('');
-			$('#date').val('');
-			$('#name').val('');
-			$('#title').val('');
-			$('#money').val('');
-		},
-		error:function(XMLHttpRequest,textStatus, errorThrown){
-			alert('データの通信に失敗');
-		}
-	});
-}  */
-
-
-function renderTable(data) {
-	var headerRow = '<tr><th>ID</th><th>タイトル</th><th>返却予定日</th><th>ステータス</th></tr>';
-
-	$('#rentals').children().remove();
-
-	if (data.length === 0) {
-		$('#rentals').append('<p>現在借りている本はありません。</p>')
-	} else {
-		var table = $('<table>').attr('border', 1);
-		table.append(headerRow);
-		$.each(data, function(index, expense) {
-			var row = $('<tr>');
-			row.append($('<td>').text(expense.id));
-			row.append($('<td>').text(expense.date));
-			row.append($('<td>').text(expense.name));
-			row.append($('<td>').text(expense.title));
-			row.append($('<td>').text(expense.money));
-			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button").attr("onclick", "findById("+expense.id+')')
-				));
-			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button").attr("onclick", "deleteById("+expense.id+')')
-				));
-			table.append(row);
-		});
-
-		$('#expenses').append(table);
-	}
-
 }
 
-
-/** function renderDetails(expense) {
-	$('.error').text('');
-	$('#expenseId').val(expense.id);
-	$('#date').val(expense.date);
-	$('#name').val(expense.name);
-	$('#title').val(expense.title);
-	$('#money').val(expense.money);
+function goBookDetail(bookId){
+	location.href ='./BookDetail.html?bookId='+bookId;
 }
-*/
 
+/** function goMypage(){
+	location.href ='./MyPage.html'
+} */
 
-function formToJSON() {
-	var expenseId = $('#expenseId').val();
-	return JSON.stringify({
-		"id": (expenseId == "" ? 0 : expenseId),
-		"date": $('#date').val(),
-		"name": $('#name').val(),
-		"title": $('#title').val(),
-		"money": $('#money').val()
-	});
+function goBookSearch(){
+	location.href ='./BookSearch.html'
 }
+
+function goAlert(bookId){
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
+
+	location.href ='./Alert.html?userId='+userId;
+}
+
+$(document).ready(function () {
+	'use strict';
+
+	// 初期表示用
+	displayAll();
+
+	//$('#js-btn-mypage').click(goMypage);
+	$('#js-btn-search').click(goBookSearch);
+	$('#js-href-alert').click(goAlert);
+
+});

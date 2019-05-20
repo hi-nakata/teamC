@@ -1,5 +1,6 @@
 package teamC;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -11,6 +12,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+
+
 
 
 
@@ -41,6 +44,7 @@ public class AccountResource {
 		boolean auth = accDao.auth(log);
 		if(auth==true){
 			session.setAttribute("loginId", log.getLoginId());
+			session.setAttribute("loginPass", log.getLoginPass());
 			System.out.println(session.getAttribute("loginId"));
 		}
 		return accDao.auth(log);
