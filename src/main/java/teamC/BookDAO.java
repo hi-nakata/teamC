@@ -13,15 +13,10 @@ public class BookDAO {
 	/**クエリ文字列**/
 
 	private static final String SELECT_ALL_BOOK =
-			"select  \n" +
-					"BO.TITLE ,BO.AUTHOR  \n" +
-					",BO.PUBLISHER  \n" +
-					",BO.SHELF  \n" +
-					",RE.RENTAL_STATUS  \n" +
-					",AC.EMPLOYEE_NAME  \n" +
-					",RE.DUE_DATE \n" +
+			"select \n" +
+					"* \n" +
 					" \n" +
-					"from  \n" +
+					"from \n" +
 					"BOOK BO \n" +
 					" \n" +
 					"LEFT OUTER JOIN RENTAL RE \n" +
