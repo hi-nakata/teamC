@@ -53,10 +53,8 @@ function updateRentalStatus(bookId) {
 	console.log('updateRentalStatus start - bookId:'+ bookId);
 	$.ajax({
 		type: "PUT",
-		//contentType: "application/json",
-		url: rootUrl+'/'+bookId,
+		url: rootUrl+'/rentalStatus/'+bookId,
 		dataType: "json",
-		//data: formToJSON(),
 		success: function() {
 			alert('返却しました');
 			displayAll();
@@ -70,10 +68,6 @@ function updateRentalStatus(bookId) {
 function goBookDetail(bookId){
 	location.href ='./BookDetail.html?bookId='+bookId;
 }
-
-/** function goMypage(){
-	location.href ='./MyPage.html'
-} */
 
 function goBookSearch(){
 	location.href ='./BookSearch.html'
@@ -93,7 +87,6 @@ $(document).ready(function () {
 	// 初期表示用
 	displayAll();
 
-	//$('#js-btn-mypage').click(goMypage);
 	$('#js-btn-search').click(goBookSearch);
 	$('#js-href-alert').click(goAlert);
 
