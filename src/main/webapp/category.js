@@ -7,7 +7,7 @@ $('saveCat').click(function(){
 
 	var catName = $('catName').val();
 	if(catName === ''){
-		$('.error').text('名前は必須入力です。');
+		$('.error').text('は必須入力です。');
 		return false;
 	}else{
 		$('.error').text('');
@@ -31,6 +31,19 @@ function findAll(){
 		dataType: "json",
 		success: renderTable
 	});
+}
+
+function findById(id){
+	console.log('findById start - id:'+id);
+	$.ajax({
+		type : "GET",
+		url : rootUrl +'/'+ id,
+		dataTyoe :"json",
+		success :function(data){
+			console.log('findById success: ' + data.name);
+			renderDetails(data);
+		} 
+	})
 }
 
 
