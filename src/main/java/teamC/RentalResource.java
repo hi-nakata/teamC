@@ -16,6 +16,12 @@ public class RentalResource {
 	private final RentalDAO dao = new RentalDAO();
 
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RentalCard> allAlerts() {
+		return dao.allAlerts();
+	}
+
+	@GET
 	@Path("{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RentalCard> allRentals(@PathParam("userId") String userId){
@@ -23,20 +29,20 @@ public class RentalResource {
 		return dao.allRentals(userId);
 	}
 
-	@GET
-	@Path("{adminId}")
+	@PUT
+	@Path("rentalStatus/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RentalCard> allAlerts(@PathParam("adminId") String adminId){
+	public void updateRentalStatus(@PathParam("bookId") int bookId){
 		System.out.println("ok");
-		return dao.allRentals(adminId);
+		dao.updateRentalStatus(bookId);
 	}
 
 	@PUT
-	@Path("{bookId}")
+	@Path("alertStatus/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void update(@PathParam("bookId") int bookId){
+	public void updateAlertStatus(@PathParam("bookId") int bookId){
 		System.out.println("ok");
-		dao.update(bookId);
+		dao.updateAlertStatus(bookId);
 	}
 }
 

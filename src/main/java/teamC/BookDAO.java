@@ -29,6 +29,7 @@ public class BookDAO {
 					" \n" +
 					"LEFT OUTER JOIN ACCOUNT AC \n" +
 					"ON RE.USER_ID = AC.USER_ID \n" ;
+
 	private static final String INSERT_QUERY = "INSERT INTO \n" +
 			"BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) \n" +
 			"VALUES(?,?,?,?,?); \n";

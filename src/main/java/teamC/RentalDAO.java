@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,30 @@ public class RentalDAO {
 					"where \n" +
 					"BOOK_ID = ? ";
 
+	private static final String SELECT_ALL_ALERT =
+					"select \n" +
+					"B.BOOK_ID \n" +
+					",R.DUE_DATE \n" +
+					",B.TITLE \n" +
+					",A.EMPLOYEE_NAME \n" +
+					",R.ALERT_STATUS \n" +
+					"from \n" +
+					"BOOK B \n" +
+					",RENTAL R \n" +
+					",ACCOUNT A \n" +
+					"where 1=1 \n" +
+					"and B.BOOK_ID=R.BOOK_ID(+) \n" +
+					"and R.USER_ID=A.USER_ID(+) \n" +
+					"and R.RENTAL_STATUS(+)='1' \n" +
+					"and TRUNC(SYSDATE) <= R.DUE_DATE ";
+
+	private static final String UPDATE_ALERT =
+					"update  \n" +
+					"RENTAL \n" +
+					"set \n" +
+					"ALERT_STATUS = 1 \n" +
+					"where \n" +
+					"BOOK_ID = ? ";
 
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
@@ -59,13 +84,36 @@ public class RentalDAO {
 		return result;
 	}
 
+	public List<RentalCard> allAlerts() {
+		List<RentalCard> result = new ArrayList<>();
+
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return result;
+		}
+
+		try (Statement statement = connection.createStatement();) {
+			ResultSet rs = statement.executeQuery(SELECT_ALL_ALERT);
+
+			while (rs.next()) {
+				result.add(processRow(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return result;
+	}
+
 	/**
-	 * 指定されたIDのRentalデータを更新する。
+	 * 指定されたIDのbookデータのRentalStatusを更新する。
 	 *
-	 * @param id 更新対象のExpenseデータのID
+	 * @param id 更新対象のbookデータのID
 	 * @return 更新が成功したらtrue、失敗したらfalse
 	 */
-	public boolean update(int bookId) {
+	public boolean updateRentalStatus(int bookId) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
@@ -73,6 +121,31 @@ public class RentalDAO {
 
 		int count = 0;
 		try (PreparedStatement statement = connection.prepareStatement(UPDATE_RENTAL)) {
+			// UPDATE実行
+			statement.setInt(1, bookId);
+			count = statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+		return count == 1;
+	}
+
+	/**
+	 * 指定されたIDのbookデータのAlertStatusを更新する。
+	 *
+	 * @param id 更新対象のbookデータのID
+	 * @return 更新が成功したらtrue、失敗したらfalse
+	 */
+	public boolean updateAlertStatus(int bookId) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return false;
+		}
+
+		int count = 0;
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_ALERT)) {
 			// UPDATE実行
 			statement.setInt(1, bookId);
 			count = statement.executeUpdate();
