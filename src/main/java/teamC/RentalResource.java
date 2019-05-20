@@ -2,6 +2,7 @@ package teamC;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -33,6 +34,7 @@ public class RentalResource {
 
 	@POST
 	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void create(@PathParam("id") int id){
 		System.out.println("貸出");
