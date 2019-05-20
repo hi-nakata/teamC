@@ -21,32 +21,33 @@
 	<div>
 		<p id="page-title">蔵書詳細</p>
 	</div>
-	<form>
+	<div class="error"></div>
+	<form id="book-detail">
 
 		<div>
-			<label for="">タイトル:</label> <input type="text" placeholder="最後のJAVA" maxlength="" name=""
-				id="">
+			<label for="title">タイトル:</label>
+			<input type="text" placeholder="最後のJAVA" maxlength="" name="" id="form-title" value="最後のJAVA">
 		</div>
 		<div>
-			<label for="">著者:</label> <input type="text" placeholder="未来三郎" maxlength="" name=""
-				id="">
+			<label for="author">著者:</label>
+			<input type="text" placeholder="未来三郎" maxlength="" name="" id="form-author" value="未来三郎">
 		</div>
 		<div>
-			<label for="">出版社:</label> <input type="text" placeholder="明日は出版社" maxlength="" name=""
-				id="">
+			<label for="publisher">出版社:</label>
+			<input type="text" placeholder="明日は出版社" maxlength="" name="" id="form-publisher" value="明日は出版社">
 		</div>
 		<div>
-			<label for="">発行年月:</label> <input type="text" placeholder="20190515" maxlength="" name=""
-				id="">
+			<label for="pubdate">発行年月:</label>
+			<input type="text" placeholder="20190515" maxlength="" name="" id="form-pubdate" value="20190515">
 		</div>
 		<div>
-			<label for="">配架場所:</label> <input type="text" placeholder="A8" maxlength="" name=""
-				id="">
+			<label for="bookshelf">配架場所:</label>
+			<input type="text" placeholder="A8" maxlength="" name="" id="form-bookshelf" value="A8">
 		</div>
 		<div>
 
-			<button id="">登録</button>
-			<button id="">貸出</button>
+			<button id="form-btn-regist">登録</button>
+			<button id="form-btn-rental">貸出</button>
 		</div>
 	</form>
 </body>

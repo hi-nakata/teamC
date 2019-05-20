@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Book {
 
 	/**保持データ**/
+	private int id;
 	private String title;
 	private String author;
 	private String publisher;
+	private String pubdate;
 	private String shelf;
 	private int rentalStatus;
 	private String name;
@@ -59,6 +61,22 @@ public class Book {
 	public String toString() {
 		return "Book [title=" + title + ", author=" + author + ", publisher=" + publisher + ", shelf=" + shelf
 				+ ", rentalStatus=" + rentalStatus + ", name=" + name + ", dueDate=" + dueDate + "]";
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getPubdate() {
+		return pubdate;
+	}
+	public void setPubdate(String pubdate) {
+		this.pubdate = pubdate;
+	}
+	public boolean isValidObject() {
+		// TODO 判定作る
+		return true;
 	}
 
 }
