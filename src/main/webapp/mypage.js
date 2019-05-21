@@ -66,7 +66,11 @@ function updateRentalStatus(bookId) {
 }
 
 function goBookDetail(bookId){
-	location.href ='./BookDetail.html?bookId='+bookId;
+	//location.href ='./BookDetail.html?bookId='+bookId;
+	var settedUrl = './BookDetail.html?bookId='+bookId;
+	//新規Windowで表示
+	//location.href = './BookDetail.html?bookId='+id;
+	window.open(settedUrl);
 }
 
 function goBookSearch(){

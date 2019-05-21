@@ -91,6 +91,7 @@ public class BookDAO {
 		result.setRentalStatus(rs.getInt("rental_Status"));
 		result.setName(rs.getString("EMPLOYEE_NAME"));
 		result.setDueDate(rs.getString("due_Date"));
+		result.setPubdate(rs.getString("YEAR"));
 
 		return result;
 
