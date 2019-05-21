@@ -172,7 +172,14 @@ function goDetail(id){
 	window.open(settedUrl);
 }
 
+function goMyPage(){
+	var hogepiyo =localStorage.getItem("userId");
+	location.href ='./MyPage.html?userId='+hogepiyo;
+}
 
+function hyoujiUserName(){
+	$('#hoge').append(localStorage.getItem("userName"));
+}
 
 $(document).ready(function () {
 	'use strict';
@@ -183,6 +190,9 @@ $(document).ready(function () {
 	$('#js-btn-search').click(findByParam);
 
 	$('#js-btn-detail').click(goDetail);
+	$('#js-btn-mypage').click(goMyPage);
+
+	hyoujiUserName();
 
 	// 初期表示用
 	displayAll();

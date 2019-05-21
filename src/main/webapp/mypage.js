@@ -93,12 +93,23 @@ function goBookSearch(){
 	location.href ='./BookSearch.html'
 }
 
+function goMyPage(){
+	var hogepiyo =localStorage.getItem("userId");
+	location.href ='./MyPage.html?userId='+hogepiyo;
+}
+
+function hyoujiUserName(){
+	$('#hoge').append(localStorage.getItem("userName"));
+}
+
 $(document).ready(function () {
 	'use strict';
 
 	// 初期表示用
 	displayAll();
+	hyoujiUserName();
 
 	$('#js-btn-search').click(goBookSearch);
+	$('#js-btn-mypage').click(goMyPage);
 
 });
