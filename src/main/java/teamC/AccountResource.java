@@ -34,15 +34,20 @@ public class AccountResource {
 		  Object loginCheck = session.getAttribute("login");
 		  if (loginCheck == null){
 		    /* まだ認証されていない */
+		  }else{
+
 		  }
 		}
 
-		boolean auth = accDao.auth(log);
+		boolean auth = accDao.auth(log).isLogined();
 		if(auth==true){
 			session.setAttribute("loginId", log.getLoginId());
-			session.setAttribute("loginPass", log.getLoginPass());
+			session.setAttribute("admin", log.isAdmin());
+			session.setAttribute("userName", log.getUserName());
 			System.out.println(session.getAttribute("loginId"));
+			System.out.println(session.getAttribute("admin"));
+			System.out.println(session.getAttribute("userName"));
 		}
-		return accDao.auth(log);
+		return auth;
 	}
 }
