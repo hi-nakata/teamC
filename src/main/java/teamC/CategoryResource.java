@@ -37,7 +37,7 @@ public class CategoryResource {
 	 * @return 取得したカテゴリ情報をJSON形式で返す。
 	 */
 	@GET
-	@Path("{id}")
+	@Path("{categoryId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Category findById(@PathParam("id") int id) {
 		return dao.findById(id);
