@@ -2,6 +2,8 @@ package teamC;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -76,7 +79,7 @@ public class BookResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Book update(@PathParam("id") int id,
-			final FormDataMultiPart form) throws WebApplicationException {
+			final FormDataMultiPart form, @Context final HttpServletRequest request) throws WebApplicationException {
 		Book book = new Book();
 
 		book.setId(id);
@@ -89,7 +92,12 @@ public class BookResource {
 		if (!book.isValidObject()) {
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
-		return dao.update(book);
+
+		HttpSession ses = request.getSession();
+		if((boolean) ses.getAttribute("admin")){
+			return dao.update(book);
+		}
+			return null;
 	}
 
 }
