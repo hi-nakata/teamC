@@ -20,7 +20,7 @@ public class CategoryDAO {
 			"from \n" +
 			"CATEGORY";
 	private static final String SELECT_BY_ID_QUERY="";
-	private static final String INSERT_QUERY="";
+	private static final String INSERT_QUERY="INSERT INTO Category(CAT_ID,CAT_NAME) \n"+"values(?,?)";
 	private static final String UPDATE_QUERY="";
 	private static final String DELETE_QUERY="";
 
