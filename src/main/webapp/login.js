@@ -12,8 +12,10 @@ function login(){
 		processData : false,
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			if(data==true){
+			if(data.logined==true){
 				alert('loginに成功しました');
+				localStorage.setItem('userId',data.loginId);
+				localStorage.setItem('userName',data.userName);
 				location.href ='./MyPage.html?userId='+$('#js-input-loginId').val()
 			}else{
 				alert('loginに失敗しましたyo');

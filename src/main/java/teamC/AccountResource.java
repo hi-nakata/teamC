@@ -20,7 +20,7 @@ public class AccountResource {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean auth(final FormDataMultiPart form, @Context final HttpServletRequest request) throws WebApplicationException {
+	public Account auth(final FormDataMultiPart form, @Context final HttpServletRequest request) throws WebApplicationException {
 		Account log = new Account();
 		log.setLoginId(form.getField("js-input-loginId").getValue());
 		log.setLoginPass(form.getField("js-input-loginPass").getValue());
@@ -40,6 +40,7 @@ public class AccountResource {
 		}
 
 		boolean auth = accDao.auth(log).isLogined();
+
 		if(auth==true){
 			session.setAttribute("loginId", log.getLoginId());
 			session.setAttribute("admin", log.isAdmin());
@@ -48,6 +49,6 @@ public class AccountResource {
 			System.out.println(session.getAttribute("admin"));
 			System.out.println(session.getAttribute("userName"));
 		}
-		return auth;
+		return log;
 	}
 }
