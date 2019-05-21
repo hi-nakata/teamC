@@ -23,6 +23,7 @@ function displayAll(){
 				+'<th>借りた人</th><th>返却予定日</th><th></th><th></th></tr>';
 
 			$('#searchedList').children().remove();
+			console.log('消した')
 
 			if(json.length === 0){
 				$('#searchedList').append('<p>現在データが存在していません。</p>')
@@ -145,11 +146,12 @@ function tryRental(id){
 	console.log('tryRental start.');
 
 	$.ajax({
-		type : POST,
+		type : 'POST',
 		url:  "/teamC/webapi/rentals"+"/"+id,
 		dataType : "json" ,
 		success : function(){
-			alert('貸し出しました')
+			alert('貸し出しました');
+			displayAll();
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}

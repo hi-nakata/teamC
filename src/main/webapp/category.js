@@ -7,7 +7,7 @@ $('saveCat').click(function(){
 
 	var catName = $('catName').val();
 	if(catName === ''){
-		$('.error').text('名前は必須入力です。');
+		$('.error').text('は必須入力です。');
 		return false;
 	}else{
 		$('.error').text('');
@@ -31,6 +31,38 @@ function findAll(){
 		dataType: "json",
 		success: renderTable
 	});
+}
+
+function findById(id){
+	console.log('findById start - id:'+id);
+	$.ajax({
+		type : "GET",
+		url : rootUrl +'/'+ id,
+		dataTyoe :"json",
+		success :function(data){
+			console.log('findById success: ' + data.name);
+			renderDetails(data);
+		} 
+	})
+}
+
+function addCat() {
+	console.log('addCat start');
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: rootUrl,
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR) {
+			alert('カテゴリデータの追加に成功しました');
+			$('#catId').val(data.id);
+			findAll();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('カテゴリデータの追加に失敗しました');
+		}
+	})
 }
 
 
