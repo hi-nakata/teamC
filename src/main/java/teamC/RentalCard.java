@@ -11,6 +11,7 @@ public class RentalCard {
 	private String dueDate;
 	private int rentalStatus;
 	private int alertStatus;
+	private int restDate;
 
 	public String getTitle() {
 		return title;
@@ -46,7 +47,7 @@ public class RentalCard {
 
 	@Override
 	public String toString() {
-		return "RentalCard [bookId=" + bookId + ", title=" + title + ", employeeName=" + employeeName + ", dueDate=" + dueDate + ", rentalStatus=" + rentalStatus + ", alertStatus=" + alertStatus + "]";
+		return "RentalCard [bookId=" + bookId + ", title=" + title + ", employeeName=" + employeeName + ", dueDate=" + dueDate + ", rentalStatus=" + rentalStatus + ", alertStatus=" + alertStatus + ", restDate=" + restDate + "]";
 	}
 
 	public String getEmployeeName() {
@@ -63,5 +64,13 @@ public class RentalCard {
 
 	public void setAlertStatus(int alertStatus) {
 		this.alertStatus = alertStatus;
+	}
+
+	public int getRestDate() {
+		return restDate;
+	}
+
+	public void setRestDate(int restDate) {
+		this.restDate = restDate;
 	}
 }

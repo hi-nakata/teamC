@@ -12,10 +12,10 @@ public class RentalDAO {
 
 	private static final String SELECT_ALL_RENTAL =
 					"select \n" +
-					"B.BOOK_ID"+
+					"B.BOOK_ID \n" +
 					",B.TITLE \n" +
-					",R.DUE_DATE \n" +
-					",R.RENTAL_STATUS \n" +
+					",TO_CHAR(R.DUE_DATE, 'YYYY/MM/DD') AS DUE_DATE \n" +
+					",TO_NUMBER(TRUNC(R.DUE_DATE) - TRUNC(SYSDATE)) AS REST_DATE \n" +
 					"from \n" +
 					"BOOK B \n" +
 					",RENTAL R \n" +
@@ -25,7 +25,6 @@ public class RentalDAO {
 					"and R.USER_ID=A.USER_ID(+) \n" +
 					"and A.USER_ID= ? \n" +
 					"and R.RENTAL_STATUS(+)=1 ";
-
 
 	private static final String UPDATE_RENTAL =
 					"update  \n" +
@@ -38,7 +37,7 @@ public class RentalDAO {
 	private static final String SELECT_ALL_ALERT =
 					"select \n" +
 					"B.BOOK_ID \n" +
-					",R.DUE_DATE \n" +
+					",TRUNC(R.DUE_DATE) \n" +
 					",B.TITLE \n" +
 					",A.EMPLOYEE_NAME \n" +
 					",R.ALERT_STATUS \n" +
@@ -86,7 +85,7 @@ public class RentalDAO {
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()){
-				result.add(revealRentalCardResultSet(rs));
+				result.add(owingRentalCardResultSet(rs));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -108,7 +107,7 @@ public class RentalDAO {
 			ResultSet rs = statement.executeQuery(SELECT_ALL_ALERT);
 
 			while (rs.next()) {
-				result.add(unpackRentalCardResultSet(rs));
+				result.add(delayRentalCardResultSet(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,20 +187,20 @@ public class RentalDAO {
 		return count == 1;
 	}
 
-	private RentalCard revealRentalCardResultSet(ResultSet rs) throws SQLException{
+	private RentalCard owingRentalCardResultSet(ResultSet rs) throws SQLException{
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("TITLE"));
 		result.setDueDate(rs.getString("DUE_DATE"));
-		result.setRentalStatus(rs.getInt("RENTAL_STATUS"));
+		result.setRestDate(rs.getInt("REST_DATE"));
 		return result;
 
 	}
 
-	private RentalCard unpackRentalCardResultSet(ResultSet rs) throws SQLException{
+	private RentalCard delayRentalCardResultSet(ResultSet rs) throws SQLException{
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
-		result.setDueDate(rs.getString("DUE_DATE"));
+		result.setDueDate(rs.getString("TRUNC(R.DUE_DATE)"));
 		result.setTitle(rs.getString("TITLE"));
 		result.setEmployeeName(rs.getString("EMPLOYEE_NAME"));
 		result.setAlertStatus(rs.getInt("ALERT_STATUS"));
