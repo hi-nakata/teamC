@@ -46,6 +46,25 @@ function findById(id){
 	})
 }
 
+function addCat() {
+	console.log('addCat start');
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: rootUrl,
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR) {
+			alert('カテゴリデータの追加に成功しました');
+			$('#catId').val(data.id);
+			findAll();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('カテゴリデータの追加に失敗しました');
+		}
+	})
+}
+
 
 function renderTable(data) {
 

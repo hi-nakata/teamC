@@ -23,6 +23,7 @@ function displayAll(){
 				+'<th>借りた人</th><th>返却予定日</th><th></th><th></th></tr>';
 
 			$('#searchedList').children().remove();
+			console.log('消した')
 
 			if(json.length === 0){
 				$('#searchedList').append('<p>現在データが存在していません。</p>')
