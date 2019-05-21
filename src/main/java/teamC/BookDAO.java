@@ -14,16 +14,26 @@ public class BookDAO {
 
 	private static final String SELECT_ALL_BOOK =
 			"select \n" +
-					"* \n" +
+					"BO.BOOK_ID \n" +
+					",BO.TITLE \n" +
+					",BO.AUTHOR \n" +
+					",BO.PUBLISHER \n" +
+					",BO.SHELF \n" +
+					",RE.RENTAL_STATUS \n" +
+					",AC.EMPLOYEE_NAME \n" +
+					",TO_CHAR(RE.DUE_DATE,'YYYY/MM/DD') AS DUE_DATE \n" +
+					" \n" +
 					" \n" +
 					"from \n" +
 					"BOOK BO \n" +
 					" \n" +
 					"LEFT OUTER JOIN RENTAL RE \n" +
 					"ON BO.BOOK_ID = RE.BOOK_ID \n" +
+					"and RE.RENTAL_STATUS='1' \n" +
+					" \n" +
 					" \n" +
 					"LEFT OUTER JOIN ACCOUNT AC \n" +
-					"ON RE.USER_ID = AC.USER_ID \n" ;
+					"ON RE.USER_ID = AC.USER_ID";
 
 	private static final String INSERT_QUERY = "INSERT INTO BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) VALUES(?,?,?,?,?)";
 	private static final String UPDATE_QUERY = "UPDATE BOOK \n" +

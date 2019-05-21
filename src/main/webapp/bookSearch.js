@@ -3,7 +3,11 @@
 var rootUrl = "/teamC/webapi/books";
 
 
+var timer;
 
+timer = setTimeout(function () {
+	location.reload();
+}, 30000);
 
 
 /*すべての本を一覧表示する機能*/
@@ -68,6 +72,7 @@ function displayAll(){
 
 				$('#searchedList').append(table);
 			}
+
 		}
 	});
 }
@@ -137,6 +142,8 @@ function findByParam(){
 
 				$('#searchedList').append(table);
 			}
+
+			clearTimeout(timer);
 		}
 	})
 }
@@ -168,6 +175,8 @@ function goDetail(id){
 	//location.href = './BookDetail.html?bookId='+id;
 	window.open(settedUrl);
 }
+
+
 
 $(document).ready(function () {
 	'use strict';

@@ -12,9 +12,9 @@ public class ConnectionProvider {
      * データベース接続情報
      */
 	private static final String DRIVER_NAME = "oracle.jdbc.driver.OracleDriver";
-    private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USER_ID = "tks";
-    private static final String PASSWORD = "tks";
+    private static final String URL = "jdbc:oracle:thin:@ec2-54-248-14-40.ap-northeast-1.compute.amazonaws.com:1521:XE";
+    private static final String USER_ID = "teamc";
+    private static final String PASSWORD = "teamc";
 
     /**
      * コネクションオブジェクトを取得する。
