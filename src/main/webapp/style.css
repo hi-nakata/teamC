@@ -31,6 +31,22 @@
 	background-color: blue;
 }
 
+.late {
+	background-color: red;
+}
+
+.today {
+	background-color: fuchsia;
+}
+
+.one {
+	background-color: yellow;
+}
+
+.three {
+	background-color: lime;
+}
+
 /**フッター設定**/
 footer{
     width: 100%;

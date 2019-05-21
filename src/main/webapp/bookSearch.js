@@ -147,7 +147,7 @@ function tryRental(id){
 
 	$.ajax({
 		type : 'POST',
-		url:  "/teamC/webapi/rentals"+"/"+id,
+		url:  "/teamC/webapi/rentals/"+id,
 		dataType : "json" ,
 		success : function(){
 			alert('貸し出しました');
