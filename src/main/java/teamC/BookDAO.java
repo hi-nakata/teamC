@@ -113,7 +113,7 @@ public class BookDAO {
 
 		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "BOOK_ID" });) {
 			// INSERT実行
-//			setParameter(statement, employee, false);
+			setParameter(statement, employee, false);
 			statement.executeUpdate();
 
 			// INSERTできたらKEYを取得

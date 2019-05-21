@@ -66,6 +66,12 @@ function fillEditData(id){
 			console.log('通信に成功しました。')
 			console.log(json);
 			//inputにつめる
+			$('#form-title').attr('value',json.title)
+			$('#form-author').attr('value',json.author)
+			$('#form-publisher').attr('value',json.publisher)
+			$('#form-pubdate').attr('value',json.pubdate)
+			$('#form-bookshelf').attr('value',json.shelf)
+			$('<button>').text("貸出").attr("onclick", "rental("+ id +')')
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
