@@ -44,7 +44,7 @@ public class RentalResource {
 	@PUT
 	@Path("rentalStatus/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void updateRentalStatus(@PathParam("bookId") int bookId){
+	public void returnBook(@PathParam("bookId") int bookId){
 		System.out.println("返却");
 		dao.returnBook(bookId);
 	}
@@ -52,7 +52,7 @@ public class RentalResource {
 	@PUT
 	@Path("alertStatus/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void updateAlertStatus(@PathParam("bookId") int bookId){
+	public void alert(@PathParam("bookId") int bookId){
 		System.out.println("催促");
 		dao.alert(bookId);
 	}

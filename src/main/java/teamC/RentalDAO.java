@@ -37,7 +37,7 @@ public class RentalDAO {
 	private static final String SELECT_ALL_ALERT =
 					"select \n" +
 					"B.BOOK_ID \n" +
-					",TRUNC(R.DUE_DATE) \n" +
+					",TO_CHAR(R.DUE_DATE, 'YYYY/MM/DD') AS DUE_DATE \n" +
 					",B.TITLE \n" +
 					",A.EMPLOYEE_NAME \n" +
 					",R.ALERT_STATUS \n" +
@@ -67,7 +67,7 @@ public class RentalDAO {
 					"trunc(sysdate)+14, \n" +
 					"'20190101', \n" +
 					"'0', \n" +
-					"'mirai_kako', \n" +
+					"'p001', \n" +
 					"'1', \n" +
 					"'20190101') ";
 
@@ -107,7 +107,7 @@ public class RentalDAO {
 			ResultSet rs = statement.executeQuery(SELECT_ALL_ALERT);
 
 			while (rs.next()) {
-				result.add(delayRentalCardResultSet(rs));
+				result.add(lateRentalCardResultSet(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -197,10 +197,10 @@ public class RentalDAO {
 
 	}
 
-	private RentalCard delayRentalCardResultSet(ResultSet rs) throws SQLException{
+	private RentalCard lateRentalCardResultSet(ResultSet rs) throws SQLException{
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
-		result.setDueDate(rs.getString("TRUNC(R.DUE_DATE)"));
+		result.setDueDate(rs.getString("DUE_DATE"));
 		result.setTitle(rs.getString("TITLE"));
 		result.setEmployeeName(rs.getString("EMPLOYEE_NAME"));
 		result.setAlertStatus(rs.getInt("ALERT_STATUS"));
