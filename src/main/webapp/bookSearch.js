@@ -167,6 +167,17 @@ function goDetail(id){
 
 }
 
+
+
+window.addEventListener('load',function(){
+	reload();
+
+})
+
+setTimeout(function () {
+    location.reload();
+}, 60000);
+
 $(document).ready(function () {
 	'use strict';
 
