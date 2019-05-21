@@ -75,7 +75,7 @@ public class RentalDAO {
 					"trunc(sysdate)+14, \n" +
 					"'20190101', \n" +
 					"'0', \n" +
-					"'p001', \n" +
+					"?, \n" +
 					"'1', \n" +
 					"'20190101') ";
 
@@ -176,7 +176,7 @@ public class RentalDAO {
 		return count == 1;
 	}
 
-	public boolean rental(int bookId) {
+	public boolean rental(int bookId,String userId) {
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
 			return false;
@@ -185,6 +185,7 @@ public class RentalDAO {
 		try (PreparedStatement statement = connection.prepareStatement(INSERT_RENTAL_CARD)) {
 			// INSERT実行
 			statement.setInt(1, bookId);
+			statement.setString(2, userId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

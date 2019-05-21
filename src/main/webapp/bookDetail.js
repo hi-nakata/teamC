@@ -8,6 +8,8 @@ bookId = bookId.split('=')[1];
 
 $(document).ready(function () {
 
+	hyoujiUserName();
+
 	if (bookId === undefined)
 		console.log("hage")
 	else
@@ -112,11 +114,17 @@ function addBook() {
 		processData : false,
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			alert('社員データの追加に成功しました');
-			location.href ='./BookDetail.html'
+			if(data==null){
+				alert('編集権限がありません');
+			}else{
+				console.log(data)
+				alert('蔵書データを追加しました');
+				location.href ='./BookDetail.html'
+			}
+
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert('社員データの追加に失敗しました');
+			alert('蔵書データの追加に失敗しました');
 		}
 	})
 }
@@ -134,12 +142,19 @@ function updateBook(id) {
 		processData : false,
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			alert('社員データの更新に成功しました');
-			console.log(data)
-			location.href ='./bookDetail.html'
+			if(data==null){
+				alert('編集権限がありません');
+			}else{
+				alert('蔵書データを更新しました');
+				location.href ='./BookDetail.html'
+			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert('社員データの更新に失敗しました');
+			alert('蔵書データの更新に失敗しました');
 		}
 	})
+}
+
+function hyoujiUserName(){
+	$('#hoge').append(localStorage.getItem("userName"));
 }
