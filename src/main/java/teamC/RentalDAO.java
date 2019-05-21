@@ -56,7 +56,7 @@ public class RentalDAO {
 					"where 1=1 \n" +
 					"and B.BOOK_ID=R.BOOK_ID(+) \n" +
 					"and R.USER_ID=A.USER_ID(+) \n" +
-					"and R.RENTAL_STATUS(+)='1' \n" +
+					"and R.RENTAL_STATUS(+)=1 \n" +
 					"and TRUNC(SYSDATE) >= R.DUE_DATE ";
 
 	private static final String UPDATE_ALERT =
@@ -74,9 +74,9 @@ public class RentalDAO {
 					"trunc(sysdate), \n" +
 					"trunc(sysdate)+14, \n" +
 					"'20190101', \n" +
-					"'0', \n" +
+					"0, \n" +
 					"?, \n" +
-					"'1', \n" +
+					"1, \n" +
 					"'20190101') ";
 
 	public List<RentalCard> allRentals(String userId){
