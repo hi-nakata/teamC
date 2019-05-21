@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -63,4 +65,33 @@ public class BookResource {
 		return dao.create(book);
 	}
 
+	/**
+	 * 指定した情報でDBを更新する。
+	 *
+	 * @param form 更新情報を含めた従業員情報
+	 * @throws WebApplicationException 入力データチェックに失敗した場合に送出される。
+	 */
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Book update(@PathParam("id") int id,
+			final FormDataMultiPart form) throws WebApplicationException {
+		Book book = new Book();
+
+		book.setId(id);
+		book.setTitle(form.getField("title").getValue());
+		book.setAuthor(form.getField("author").getValue());
+		book.setPublisher(form.getField("publisher").getValue());
+		book.setPubdate(form.getField("pubdate").getValue());
+		book.setShelf(form.getField("bookshelf").getValue());
+
+		if (!book.isValidObject()) {
+			throw new WebApplicationException(Response.Status.BAD_REQUEST);
+		}
+		return dao.update(book);
+	}
+
 }
+
+

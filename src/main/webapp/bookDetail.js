@@ -66,12 +66,36 @@ function fillEditData(id){
 			console.log('通信に成功しました。')
 			console.log(json);
 			//inputにつめる
+			$('#form-title').attr('value',json[0].title)
+			$('#form-author').attr('value',json[0].author)
+			$('#form-publisher').attr('value',json[0].publisher)
+			$('#form-pubdate').attr('value',json[0].pubdate)
+			$('#form-bookshelf').attr('value',json[0].shelf)
+			$('#form-btn-rental').attr("onclick", "tryRental("+ id +')')
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
 		}
 	});
 
+}
+
+//本の貸出を行う機能
+function tryRental(id){
+	console.log('tryRental start.');
+
+	$.ajax({
+		type : 'POST',
+		url:  "/teamC/webapi/rentals"+"/"+id,
+		dataType : "json" ,
+		success : function(){
+			alert('貸し出しました');
+			displayAll();
+		},error: function(jqXHR, textStatus, errorThrown){
+			alert('貸出処理に失敗しました。')
+		}
+
+	})
 }
 
 function addBook() {
@@ -111,6 +135,7 @@ function updateBook(id) {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			alert('社員データの更新に成功しました');
+			console.log(data)
 			location.href ='./bookDetail.html'
 		},
 		error : function(jqXHR, textStatus, errorThrown) {

@@ -150,7 +150,7 @@ function tryRental(id){
 
 	$.ajax({
 		type : 'POST',
-		url:  "/teamC/webapi/rentals"+"/"+id,
+		url:  "/teamC/webapi/rentals/"+id,
 		dataType : "json" ,
 		success : function(){
 			alert('貸し出しました');
@@ -166,8 +166,10 @@ function tryRental(id){
 function goDetail(id){
 	var t = id
 	console.log(t);
-	location.href = './BookDetail.html?bookId='+id;
-
+	var settedUrl = './BookDetail.html?bookId='+id;
+	//新規Windowで表示
+	//location.href = './BookDetail.html?bookId='+id;
+	window.open(settedUrl);
 }
 
 

@@ -30,10 +30,9 @@ public class Param {
 	public String getWhereClause(){
 
 		StringBuilder whereClause = new StringBuilder();
-		if(!titleParam.isEmpty()){
+		if(titleParam != null){
 			if(whereClause.length() == 0){
 				whereClause.append(BASE_WHERE_CLAUSE);
-
 			}else{
 				whereClause.append(" AND ");
 			}
@@ -53,7 +52,7 @@ public class Param {
 	}
 	public void setParameter(PreparedStatement statement) throws SQLException {
 		int count = 1;
-		if(!titleParam.isEmpty()){
+		if(titleParam != null){
 			statement.setString(count++, titleParam);
 		}
 		if(idParam != 0){
