@@ -14,5 +14,23 @@
 			<button type="button" id="newCate">カテゴリ追加</button>
 		</div>
 	</div>
+
+	<div id="detail">
+		<p>カテゴリ詳細ページ</p>
+		<form id="cateForm" enctype="multipart/form-data">
+			<div class="error"></div>
+			<div>
+			<label for="name">カテゴリID</label>
+			<input type="text" id="catId" disabled>
+			</div>
+
+			<div>
+			<label for="name">カテゴリ名</label>
+			<input type="text" id=catName required>
+			</div>
+
+			<button id="saveCat">登録</button>
+		</form>
+	</div>
 </body>
 </html>

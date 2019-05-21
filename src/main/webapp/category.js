@@ -3,23 +3,23 @@
 var rootUrl =  "/teamC/webapi/categories";
 
 
-$('saveCat').click(function(){
-
-	var catName = $('catName').val();
+function resist(){
+	var catName = $('#catName').val();
 	if(catName === ''){
-		$('.error').text('は必須入力です。');
+		$('.error').text('カテゴリ名は必須入力です。');
 		return false;
 	}else{
 		$('.error').text('');
 	}
 
-	var catId = $('#catId').val()
-	if(id=='')
-		addCat
-		else
-			updateCat(catId)
-			return false
-})
+	var catId = $('#catId').val();
+	if(catId ==''){
+		addCat();
+	}else{
+		updateCat(catId);
+		return false
+}
+}
 
 
 
@@ -42,7 +42,7 @@ function findById(id){
 		success :function(data){
 			console.log('findById success: ' + data.name);
 			renderDetails(data);
-		} 
+		}
 	})
 }
 
@@ -66,6 +66,39 @@ function addCat() {
 }
 
 
+function updateCat(id) {
+	console.log('updatePost start');
+	$.ajax({
+		type: "PUT",
+		contentType: "application/json",
+		url: rootUrl+'/'+id,
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR) {
+			alert('カテゴリデータの更新に成功しました');
+			findAll();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('カテゴリデータの更新に失敗しました');
+		}
+	})
+}
+
+function deleteById(id) {
+	console.log('delete start - id:'+id);
+	$.ajax({
+		type: "DELETE",
+		url: rootUrl+'/'+id,
+		success: function() {
+			findAll();
+			$('#catId').val('');
+			$('#catName').val('');
+		}
+	});
+}
+
+
+
 function renderTable(data) {
 
 	var headerRow = '<tr><th>ID</th><th>カテゴリ名</th></tr>';
@@ -83,11 +116,9 @@ function renderTable(data) {
 			row.append($('<td>').text(cate.categoryId));
 			row.append($('<td>').text(cate.categoryName));
 			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button")
-			));
+					$('<button>').text("編集").attr("type","button").attr("onclick","findById("+cate.id+')')));
 			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button")
-			));
+					$('<button>').text("削除").attr("type","button").attr("onclick","deletedById("+cate.id+')')));
 			table.append(row);
 		});
 
@@ -96,11 +127,22 @@ function renderTable(data) {
 
 }
 
+function formToJSON() {
+	var catId = $('#catId').val();
+	return JSON.stringify({
+		"catId": (catId == "" ? 0 : catId),
+		"catName": $('#catName').val()
+	});
+}
+
+
 $(document).ready(function () {
 	'use strict';
 
 	// 更新ボタンにイベント設定
 	$('#searchBtn').bind('click',findAll);
+
+	$('#saveCat').click(resist);
 
 
 	// 初期表示用
