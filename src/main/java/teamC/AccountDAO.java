@@ -14,17 +14,21 @@ public class AccountDAO {
 			"	and PASSWORD = ? \n";
 
 
-	public boolean auth(Account log) {
+	public Account auth(Account log) {
 		boolean check=false;
 		Connection connection = ConnectionProvider.getConnection();
 		if (connection == null) {
-			return check;
+			log.setLogined(check);
+			return log;
 		}
 
 		try (PreparedStatement statement = connection.prepareStatement(SQL);) {
 			setParameter(statement, log, false);
 			ResultSet rs = statement.executeQuery();
 			check = rs.next();
+			log.setLogined(check);
+			log.setUserName(rs.getString("EMPLOYEE_NAME"));
+			log.setAdmin(rs.getBoolean("ADMIN"));
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -32,7 +36,7 @@ public class AccountDAO {
 			ConnectionProvider.close(connection);
 		}
 
-		return check;
+		return log;
 	}
 
 	private void setParameter(PreparedStatement statement, Account log, boolean b)throws SQLException{
