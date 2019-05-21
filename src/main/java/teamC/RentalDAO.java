@@ -15,7 +15,7 @@ public class RentalDAO {
 					"B.BOOK_ID \n" +
 					",B.TITLE \n" +
 					",TO_CHAR(R.DUE_DATE, 'YYYY/MM/DD') AS DUE_DATE \n" +
-					",TO_NUMBER(TRUNC(R.DUE_DATE) - TRUNC(SYSDATE)) AS REST_DATE \n" +
+					",TO_NUMBER(R.DUE_DATE - SYSDATE) AS REST_DATE \n" +
 					"from \n" +
 					"BOOK B \n" +
 					",RENTAL R \n" +
@@ -35,6 +35,14 @@ public class RentalDAO {
 					"BOOK_ID = ? ";
 
 	private static final String SELECT_ALL_ALERT =
+					"update \n" +
+					"RENTAL \n" +
+					"set \n" +
+					"ALERT_STATUS = 0 \n" +
+					"where \n" +
+					"TO_CHAR(SYSDATE,'D')=2 OR TO_CHAR(SYSDATE,'D')=4 \n" +
+					"; \n" +
+					" \n" +
 					"select \n" +
 					"B.BOOK_ID \n" +
 					",TO_CHAR(R.DUE_DATE, 'YYYY/MM/DD') AS DUE_DATE \n" +
