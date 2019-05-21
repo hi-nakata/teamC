@@ -135,6 +135,7 @@ function updateBook(id) {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			alert('社員データの更新に成功しました');
+			console.log(data)
 			location.href ='./bookDetail.html'
 		},
 		error : function(jqXHR, textStatus, errorThrown) {

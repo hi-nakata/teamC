@@ -26,7 +26,9 @@ public class BookDAO {
 					"ON RE.USER_ID = AC.USER_ID \n" ;
 
 	private static final String INSERT_QUERY = "INSERT INTO BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) VALUES(?,?,?,?,?)";
-
+	private static final String UPDATE_QUERY = "UPDATE BOOK \n" +
+			"SET TITLE=?,AUTHOR=?,PUBLISHER=?,YEAR=?,SHELF=?  \n" +
+			"WHERE BOOK_ID = ?";
 
 
 	/**本のデータすべてを取得する**/
@@ -156,4 +158,27 @@ public class BookDAO {
 
 }
 
+	/**
+	 * 指定されたEmployeeオブジェクトを使ってDBを更新する。
+	 *
+	 * @param employee 更新対象オブジェクト
+	 * @return 更新に成功したらtrue、失敗したらfalse
+	 */
+	public Book update(Book employee) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return employee;
+		}
+
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+			setParameter(statement, employee, true);
+			statement.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return employee;
+	}
 }
