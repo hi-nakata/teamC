@@ -9,10 +9,31 @@
 <body>
 	<div class="header"></div>
 	<div class="main">
-		<div id="cate">
-			<p>カテゴリ一覧</p>
+		<div>
+			<h3>カテゴリ 一覧</h3>
+		</div>
+		<div id="cate"></div>
+		<div>
 			<button type="button" id="newCate">カテゴリ追加</button>
 		</div>
+	</div>
+
+	<div id="detail">
+		<p>カテゴリ詳細ページ</p>
+		<form id="cateForm" enctype="multipart/form-data">
+			<div class="error"></div>
+			<div>
+				<label for="name">カテゴリID</label> <input type="text" name="" id="cateId"
+					disabled>
+			</div>
+
+			<div>
+				<label for="name">カテゴリ名</label> <input type="text" id=cateName
+					required>
+			</div>
+
+			<button id="saveCate">登録</button>
+		</form>
 	</div>
 </body>
 </html>

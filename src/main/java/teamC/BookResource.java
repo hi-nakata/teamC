@@ -51,7 +51,7 @@ public class BookResource {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Book create(final FormDataMultiPart form) throws WebApplicationException {
+	public Book create(final FormDataMultiPart form, @Context final HttpServletRequest request) throws WebApplicationException {
 		Book book = new Book();
 
 		book.setId(0);
@@ -65,7 +65,12 @@ public class BookResource {
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
 
-		return dao.create(book);
+		HttpSession ses = request.getSession();
+		if((boolean) ses.getAttribute("admin")){
+			System.out.println("admin");
+			return dao.create(book);
+		}
+			return null;
 	}
 
 	/**
@@ -95,6 +100,7 @@ public class BookResource {
 
 		HttpSession ses = request.getSession();
 		if((boolean) ses.getAttribute("admin")){
+			System.out.println("admin");
 			return dao.update(book);
 		}
 			return null;

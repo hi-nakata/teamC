@@ -3,23 +3,24 @@
 var rootUrl =  "/teamC/webapi/categories";
 
 
-$('saveCat').click(function(){
-
-	var catName = $('catName').val();
-	if(catName === ''){
-		$('.error').text('は必須入力です。');
+function resist(){
+	var cateName = $('#cateName').val();
+	if(cateName === ''){
+		$('.error').text('カテゴリ名は必須入力です。');
 		return false;
 	}else{
 		$('.error').text('');
 	}
 
-	var catId = $('#catId').val()
-	if(id=='')
-		addCat
-		else
-			updateCat(catId)
-			return false
-})
+	var cateId = $('#cateId').val();
+	if(cateId ==''){
+		addCate();
+	}else{
+		updateCate(cateId);
+		return false
+}
+}
+
 
 
 
@@ -33,21 +34,22 @@ function findAll(){
 	});
 }
 
-function findById(id){
-	console.log('findById start - id:'+id);
+function findById(categoryId){
+	console.log('findById start - id:'+categoryId);
 	$.ajax({
 		type : "GET",
-		url : rootUrl +'/'+ id,
+		url : rootUrl +'/'+ categoryId,
 		dataTyoe :"json",
-		success :function(data){
-			console.log('findById success: ' + data.name);
-			renderDetails(data);
-		} 
+		success :function(json){
+			console.log('findById success: ');
+			console.log(json);
+			renderDetails(json);
+		}
 	})
 }
 
-function addCat() {
-	console.log('addCat start');
+function addCate() {
+	console.log('addCate start');
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
@@ -56,7 +58,7 @@ function addCat() {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
 			alert('カテゴリデータの追加に成功しました');
-			$('#catId').val(data.id);
+			$('#cateId').val(data.categoryId);
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
@@ -64,6 +66,40 @@ function addCat() {
 		}
 	})
 }
+
+
+function updateCate(id) {
+	console.log('updatePost start');
+	$.ajax({
+		type: "PUT",
+		contentType: "application/json",
+		url: rootUrl+'/'+id,
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR) {
+			alert('カテゴリデータの更新に成功しました');
+			findAll();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('カテゴリデータの更新に失敗しました');
+		}
+	})
+}
+
+function deletedById(id) {
+	console.log('delete start - id:'+id);
+	$.ajax({
+		type: "DELETE",
+		url: rootUrl+'/'+id,
+		success: function() {
+			alert('カテゴリデータの削除に成功しました');
+			findAll();
+			$('#cateId').val('');
+			$('#cateName').val('');
+		}
+	});
+}
+
 
 
 function renderTable(data) {
@@ -83,11 +119,9 @@ function renderTable(data) {
 			row.append($('<td>').text(cate.categoryId));
 			row.append($('<td>').text(cate.categoryName));
 			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button")
-			));
+					$('<button>').text("編集").attr("type","button").attr("onclick","findById("+cate.categoryId+')')));
 			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button")
-			));
+					$('<button>').text("削除").attr("type","button").attr("onclick","deletedById("+cate.categoryId+')')));
 			table.append(row);
 		});
 
@@ -96,11 +130,37 @@ function renderTable(data) {
 
 }
 
+
+function renderDetails(cate) {
+	$('.error').text('');
+	$('#cateId').val(cate.categoryId);
+	$('#cateName').val(cate.categoryName);
+}
+
+function formToJSON() {
+	var cateId = $('#cateId').val();
+	var cateName=$('#cateName').val();
+	return JSON.stringify({
+		"categoryId": (cateId == "" ? 0 : cateId),
+		"categoryName": $('#cateName').val()
+	});
+}
+
+
 $(document).ready(function () {
 	'use strict';
 
 	// 更新ボタンにイベント設定
 	$('#searchBtn').bind('click',findAll);
+
+	$('#saveCate').click(resist);
+
+	$('#newCate').click(function() {
+		renderDetails({});
+	});
+
+
+
 
 
 	// 初期表示用

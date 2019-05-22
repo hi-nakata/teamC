@@ -12,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
 @Path("categories")
@@ -37,10 +36,18 @@ public class CategoryResource {
 	 * @return 取得したカテゴリ情報をJSON形式で返す。
 	 */
 	@GET
-	@Path("{id}")
+	@Path("{categoryId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Category findById(@PathParam("id") int id) {
+	public Category findById(@PathParam("categoryId") int id) {
 		return dao.findById(id);
+	}
+
+	//bookIDに紐づいたカテゴリ情報を取得
+	@GET
+	@Path("bookId/{bookId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Category findByBookId(@PathParam("bookId") int id) {
+		return dao.findByBookId(id);
 	}
 
 	/**
@@ -55,7 +62,6 @@ public class CategoryResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Category create(Category category) throws WebApplicationException {
-		validate(category);
 		return dao.create(category);
 	}
 
@@ -69,7 +75,6 @@ public class CategoryResource {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void update(Category category) throws WebApplicationException {
-		validate(category);
 		dao.update(category);
 	}
 
@@ -84,15 +89,5 @@ public class CategoryResource {
 		dao.remove(id);
 	}
 
-	/**
-	 * 入力内容のチェックを行う。
-	 * @param post 入力データを保持したモデル
-	 * @throws ValidationException 入力データチェックに失敗した場合に送出される。
-	 */
-	private void validate(Category category) throws WebApplicationException {
-		if (category.getCategoryName().isEmpty()) {
-			throw new WebApplicationException(Response.Status.BAD_REQUEST);
-		}
-	}
 
 }

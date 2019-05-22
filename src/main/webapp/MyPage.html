@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 <!-- JavaScriptの読み込み -->
 <script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script src="cross-domain-ajax/jquery.xdomainajax.js" type="text/javascript"></script>
 <script type="text/javascript" src="mypage.js"></script>
 
 </head>
@@ -15,10 +16,11 @@
 
 	<div>
 		<ul class="header">
-			<li><p>蔵書管理システム(仮)</p></li>
+			<li><p>Libroservo</p></li>
 			<li><input type="button" id="js-btn-mypage" value="マイページ"></li>
 			<li><input type="button" id="js-btn-search"value="蔵書検索"></li>
-			<li><p id="userId"></p></li>
+			<li><p id="hoge">userName:</p></li>
+
 		</ul>
 	</div>
 
@@ -28,14 +30,20 @@
 	</div>
 
 	<div id="list">
-			<p>借りている本一覧</p>
+			<h3>借りている本一覧</h3>
 			<div id="rentals"></div>
 	</div>
+
+	<div id="list">
+			<p></p>
+			<div id="history"></div>
+	</div>
+
 
 	<footer>
 		<a href="Alert.html">期限者一覧</a>
 		<a href="BookDetail.html">蔵書登録</a>
-		<a href="Category.html">カテゴリ画面</a>
+		<!-- <a href="Category.html">カテゴリ画面</a> -->
 	</footer>
 
 
