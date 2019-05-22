@@ -82,7 +82,23 @@ public class RentalDAO {
 					"where 1=1 \n" +
 					"and B.BOOK_ID = R.BOOK_ID(+) \n" +
 					"and R.RENTAL_STATUS = 0 \n" +
-					"and R.USER_ID = ? " ;
+					"and R.USER_ID = ? \n" +
+					"order by BOOK_ID ";
+
+	private static final String SELECT_BY_ID_QUERY =
+					"select \n" +
+					"R.BOOK_ID \n" +
+					",B.TITLE \n" +
+					",R.COME \n" +
+					"from \n" +
+					"BOOK B \n" +
+					",RENTAL R \n" +
+					"where 1=1 \n" +
+					"and B.BOOK_ID = R.BOOK_ID(+) \n" +
+					"and R.RENTAL_STATUS = 0 \n" +
+					"and R.USER_ID = ? \n" +
+					"and R.BOOK_ID = ? \n" +
+					"order by BOOK_ID " ;
 
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
@@ -123,6 +139,30 @@ public class RentalDAO {
 
 			while (rs.next()){
 				result.add(historyRentalCardResultSet(rs));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionProvider.close(connection);
+		}
+		return result;
+	}
+
+	public RentalCard findById(String userId, int bookId){
+
+		RentalCard result = null;
+		Connection connection =ConnectionProvider.getConnection();
+		if(connection == null){
+			return result;
+		}
+		try(PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY)){
+			statement.setString(1,userId);
+			statement.setInt(2,bookId);
+
+			ResultSet rs =statement.executeQuery();
+
+			if(rs.next()){
+				result = historyIdRentalCardResultSet(rs);
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -247,6 +287,15 @@ public class RentalDAO {
 	}
 
 	private RentalCard historyRentalCardResultSet(ResultSet rs) throws SQLException{
+		RentalCard result = new RentalCard();
+		result.setBookId(rs.getInt("BOOK_ID"));
+		result.setTitle(rs.getString("TITLE"));
+		result.setComment(rs.getString("COME"));
+		return result;
+
+	}
+
+	private RentalCard historyIdRentalCardResultSet(ResultSet rs) throws SQLException{
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("TITLE"));

@@ -41,11 +41,15 @@ function findAll(){
 	});
 }
 
-function findById(historyId){
-	console.log('findById start - id:'+historyId);
+function findById(bookId){
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
+
+	console.log('findById start - id:'+userId +'/'+bookId);
 	$.ajax({
 		type : "GET",
-		url : rootUrl +'/historyId/'+ historyId,
+		url : rootUrl +'/bookId/'+ userId +'/'+bookId ,
 		dataTyoe :"json",
 		success :function(json){
 			console.log('findById success: ');

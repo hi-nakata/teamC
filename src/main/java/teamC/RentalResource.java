@@ -49,6 +49,13 @@ public class RentalResource {
 		return dao.allHistory(userId);
 	}
 
+	@GET
+	@Path("bookId/{userId}/{bookId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public RentalCard findById(@PathParam("userId") String userId,@PathParam("bookId") int bookId) {
+		return dao.findById(userId,bookId);
+	}
+
 	@POST
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
