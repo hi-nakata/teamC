@@ -22,8 +22,6 @@
 		<url-pattern>/webapi/*</url-pattern>
 	</servlet-mapping>
 
-	<listener>
-		<listener-class>teamc.TimerSystem</listener-class>
-	</listener>
+
 
 </web-app>
