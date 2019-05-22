@@ -71,20 +71,24 @@ function updateAlertStatus(bookId) {
 }
 
 function goMypage(){
-	location.href ='./MyPage.html'
+	var userId =localStorage.getItem("userId");
+	location.href ='./MyPage.html?userId='+userId;
 }
 
 function goBookSearch(){
 	location.href ='./BookSearch.html'
 }
 
-
+function hyoujiUserName(){
+	$('#hoge').append(localStorage.getItem("userName"));
+}
 
 $(document).ready(function () {
 	'use strict';
 
 	// 初期表示用
 	displayAll();
+	hyoujiUserName();
 
 	$('#js-btn-mypage').click(goMypage);
 	$('#js-btn-search').click(goBookSearch);
