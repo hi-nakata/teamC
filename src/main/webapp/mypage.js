@@ -58,6 +58,9 @@ function displayAll(){
 							$('<button>').text("詳細").attr("type","button").attr("onclick", "goBookDetail("+rental.bookId+')')
 						));
 					table.append(row);
+
+					//Line通知
+					sendLineNotify(json);
 				});
 				$('#rentals').append(table);
 			}
@@ -101,6 +104,56 @@ function goMyPage(){
 function hyoujiUserName(){
 	$('#hoge').append(localStorage.getItem("userName"));
 }
+
+function sendLineNotify(data){
+	console.log('らいん');
+	var notify = { "value1" : data[0].title+"返せ"};
+	var key = 'b-KSby48PR5DgiLcEXBh_B'
+	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;
+//	$.post( url, notify )
+//	.done(function( data ) {
+//		console.log( data);
+//	})
+//	$.ajax({
+//		  type: 'POST',
+//		  url: url,
+//		  data: notify,
+////		  dataType: dataType
+////		  success: success,
+//		});
+	$.ajax({
+		type: "POST",
+		data:notify,
+		url: url,
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    dataType: "jsonp",
+		success: function() {
+			console.log("dekita")
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('dame');
+		}
+	})
+
+//	axios({
+//		  url: url,
+//		  method: 'POST',
+//		  headers: {
+//		    'Content-Type': 'application/x-www-form-urlencoded',
+//		  },
+//		  data: json
+//		}).then(res => {
+//		    //成功時の処理
+//		    console.log(res)
+//		  })
+//		  .catch(err => {
+//		    //エラー時の処理
+//		    console.error
+//		  })
+	}
+
 
 $(document).ready(function () {
 	'use strict';

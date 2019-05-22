@@ -48,7 +48,7 @@ public class RentalResource {
 	public void create(@PathParam("id") int id, @Context final HttpServletRequest request){
 		System.out.println("貸出");
 		HttpSession ses = request.getSession();
-		String userId = (String) ses.getAttribute("userId");
+		String userId = (String) ses.getAttribute("loginId");
 		dao.rental(id,userId);
 	}
 
