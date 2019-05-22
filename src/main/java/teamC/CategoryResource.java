@@ -42,6 +42,14 @@ public class CategoryResource {
 		return dao.findById(id);
 	}
 
+	//bookIDに紐づいたカテゴリ情報を取得
+	@GET
+	@Path("bookId/{bookId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Category findByBookId(@PathParam("bookId") int id) {
+		return dao.findByBookId(id);
+	}
+
 	/**
 	 * 指定した部署情報を登録する。
 	 * DB上のIDがセットされて返却される。
