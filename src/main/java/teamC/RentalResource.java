@@ -41,6 +41,14 @@ public class RentalResource {
 		return dao.allRentals(userId);
 	}
 
+	@GET
+	@Path("history/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RentalCard> allHistory(@PathParam("userId") String userId){
+		System.out.println("履歴");
+		return dao.allHistory(userId);
+	}
+
 	@POST
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -68,6 +76,3 @@ public class RentalResource {
 		dao.alert(bookId);
 	}
 }
-
-
-

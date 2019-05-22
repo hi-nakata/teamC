@@ -59,10 +59,56 @@ function displayRental(){
 						));
 					table.append(row);
 
-					//Line通知
-					sendLineNotify(json);
 				});
 				$('#rentals').append(table);
+			}
+		}
+	});
+}
+
+function displayHistory(){
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
+
+	console.log('displayHistory start - userId:' + userId);
+
+	$.ajax({
+		type : "GET",
+		url : rootUrl+ '/history/'+userId ,
+		dataType : "json",
+		success : function(json){
+			console.log('通信に成功しました。')
+			console.log(json);
+
+			var headerRow='<tr><th>タイトル</th><th>返却日</th><th>レーティング</th>'
+				+'<th>コメント</th><th></th></tr>';
+
+			$('#history').children().remove();
+
+			if(json.length === 0){
+				$('#history').append('<p>現在データが存在していません。</p>')
+			}else{
+				var table = $('<table>');
+
+				table.append(headerRow);
+
+				$.each(json,function(index,rental){
+					var row = $('<tr>')
+					row.append($('<td>').text(rental.title));
+					row.append($('<td>').text(rental.backDate));
+					row.append($('<td>').text(rental.rating));
+					row.append($('<td>').text(rental.comment));
+					//row.append($('<input type="text" id="rating ">'));
+					//row.append($('<input type="text" id="comment">'));
+
+					row.append($('<td>').append(
+							$('<button>').text("登録").attr("type","button").attr("onclick", "("+rental.bookId+')')
+						));
+					table.append(row);
+
+				});
+				$('#history').append(table);
 			}
 		}
 	});
@@ -160,8 +206,10 @@ $(document).ready(function () {
 
 	// 初期表示用
 	displayRental();
-	displayHistory();
+	//displayHistory();
 	hyoujiUserName();
+	//Line通知
+	//sendLineNotify(json);
 
 	$('#js-btn-search').click(goBookSearch);
 	$('#js-btn-mypage').click(goMyPage);
