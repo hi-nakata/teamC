@@ -100,6 +100,14 @@ public class RentalDAO {
 					"and R.BOOK_ID = ? \n" +
 					"order by BOOK_ID " ;
 
+	private static final String UPDATE_QUERY =
+					"update RENTAL \n" +
+					"set COME = ? \n" +
+					"where 1=1 \n" +
+					"and RENTAL_STATUS = 0 \n" +
+					"and USER_ID = ? \n" +
+					"and BOOK_ID = ? " ;
+
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
 
@@ -170,6 +178,27 @@ public class RentalDAO {
 			ConnectionProvider.close(connection);
 		}
 		return result;
+	}
+
+	public boolean update(RentalCard rental) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return false;
+		}
+
+		int count = 0;
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+			statement.setString(1, rental.getComment());
+			statement.setString(2, rental.getUserId());
+			statement.setInt(3, rental.getBookId());
+			count = statement.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return count == 1;
 	}
 
 	public List<RentalCard> allAlerts() {

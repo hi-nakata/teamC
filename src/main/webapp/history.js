@@ -88,11 +88,11 @@ function updateHistory(id) {
 		dataType: "json",
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
-			alert('履歴の更新に成功しました');
+			alert('コメントの更新に成功しました');
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('履歴の更新に失敗しました');
+			alert('コメントの更新に失敗しました');
 		}
 	})
 }
@@ -134,13 +134,15 @@ function renderDetails(history) {
 }
 
 function formToJSON() {
-	var historyId = $('#historyId').val();
-	var historyTitle=$('#historyTitle').val();
-	var historyComment=$('#historyComment').val();
+	var bookId = $('#historyId').val();
+	var userId = location.search.substring( 1, location.search.length );
+	userId = decodeURIComponent( userId );
+	userId = userId.split('=')[1];
 	return JSON.stringify({
-		"historyId": (historyId == "" ? 0 : historyId),
-		"historyTitle": $('#historyTitle').val(),
-		"historyComment": $('#historyComment').val()
+		"bookId": (bookId == "" ? 0 : bookId),
+		"title": $('#historyTitle').val(),
+		"comment": $('#historyComment').val(),
+		"userId": userId
 	});
 }
 
