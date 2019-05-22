@@ -33,12 +33,15 @@ public class BookDAO {
 			"  \n" +
 			"  \n" +
 			"LEFT OUTER JOIN ACCOUNT AC  \n" +
-			"ON RE.USER_ID = AC.USER_ID \n ";
+			"ON RE.USER_ID = AC.USER_ID";
+
 
 	private static final String INSERT_QUERY = "INSERT INTO BOOK(TITLE, AUTHOR, PUBLISHER, YEAR, SHELF) VALUES(?,?,?,?,?)";
 	private static final String UPDATE_QUERY = "UPDATE BOOK \n" +
 			"SET TITLE=?,AUTHOR=?,PUBLISHER=?,YEAR=?,SHELF=?  \n" +
 			"WHERE BOOK_ID = ?";
+
+	private static final String ORDER = " ORDER BY BO.SHELF,BO.TITLE";
 
 
 	/**本のデータすべてを取得する**/
@@ -52,7 +55,7 @@ public class BookDAO {
 		}
 
 		try(Statement statement = connection.createStatement();){
-			ResultSet rs = statement.executeQuery(SELECT_ALL_BOOK);
+			ResultSet rs = statement.executeQuery(SELECT_ALL_BOOK + ORDER);
 
 			while (rs.next()){
 				result.add(processRow(rs));
