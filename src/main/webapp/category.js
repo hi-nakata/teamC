@@ -42,6 +42,7 @@ function findById(categoryId){
 		dataTyoe :"json",
 		success :function(json){
 			console.log('findById success: ');
+			console.log(json);
 			renderDetails(json);
 		}
 	})
@@ -85,12 +86,13 @@ function updateCate(id) {
 	})
 }
 
-function deleteById(id) {
+function deletedById(id) {
 	console.log('delete start - id:'+id);
 	$.ajax({
 		type: "DELETE",
 		url: rootUrl+'/'+id,
 		success: function() {
+			alert('カテゴリデータの削除に成功しました');
 			findAll();
 			$('#cateId').val('');
 			$('#cateName').val('');
@@ -155,6 +157,8 @@ $(document).ready(function () {
 	$('#newCate').click(function() {
 		renderDetails({});
 	});
+
+
 
 
 

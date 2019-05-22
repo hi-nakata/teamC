@@ -15,23 +15,11 @@ public class CategoryDAO {
 
 	/**クエリ文字列**/
 
-	private static final String SELECT_ALL_QUERY =" \n" +
-			"select \n" +
-			"* \n" +
-			"from \n" +
-			"CATEGORY \n" +
-			"order by CAT_ID";
-	private static final String SELECT_BY_ID_QUERY=" \n" +
-			"select \n" +
-			"* \n" +
-			"from \n" +
-			"CATEGORY \n" +
-			"where \n" +
-			"CAT_ID=?";
-	private static final String INSERT_QUERY="INSERT INTO Category(CAT_ID,CAT_NAME) \n"+"values(?,?)";
-	private static final String UPDATE_QUERY="";
-	private static final String DELETE_QUERY="";
-
+	private static final String SELECT_ALL_QUERY =" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"order by CAT_ID";
+	private static final String SELECT_BY_ID_QUERY=" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"where \n" +"CAT_ID=?";
+	private static final String INSERT_QUERY="INSERT INTO CATEGORY(CAT_ID,CAT_NAME) \n"+"values(?,?)";
+	private static final String UPDATE_QUERY="UPDATE CATEGORY \n" +"SET CAT_NAME = ? \n" +"WHERE CAT_ID = ?";
+	private static final String DELETE_QUERY="DELETE FROM CATEGORY WHERE CAT_ID = ?";
 	/**カテゴリ全件取得**/
 	public List<Category> findAll(){
 		List<Category> result = new ArrayList<>();
@@ -88,7 +76,7 @@ public class CategoryDAO {
 			return category;
 		}
 
-		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "ID" });) {
+		try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[] { "CAT_ID" });) {
 			// INSERT実行
 			statement.setString(1, category.getCategoryName());
 			statement.executeUpdate();
