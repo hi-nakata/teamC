@@ -58,9 +58,7 @@ function addCate() {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
 			alert('カテゴリデータの追加に成功しました');
-
 			$('#cateId').val(data.categoryId);
-
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
