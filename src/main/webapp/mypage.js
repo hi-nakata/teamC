@@ -106,10 +106,6 @@ function displayHistory(){
 							$('<button>').text("登録").attr("type","button").attr("onclick", "("+rental.bookId+')')
 						));
 					table.append(row);
-					//Line通知
-					sendLineNotify(rental);
-
-
 				});
 				$('#history').append(table);
 			}
@@ -148,6 +144,11 @@ function goBookSearch(){
 function goMyPage(){
 	var hogepiyo =localStorage.getItem("userId");
 	location.href ='./MyPage.html?userId='+hogepiyo;
+}
+
+function goHistory(){
+	var hogepiyo =localStorage.getItem("userId");
+	location.href ='./History.html?userId='+hogepiyo;
 }
 
 function hyoujiUserName(){
@@ -211,8 +212,11 @@ $(document).ready(function () {
 	displayRental();
 	//displayHistory();
 	hyoujiUserName();
+	//Line通知
+	//sendLineNotify(rental);
 
 	$('#js-btn-search').click(goBookSearch);
 	$('#js-btn-mypage').click(goMyPage);
+	$('#js-btn-history').click(goHistory);
 
 });

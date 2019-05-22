@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>履歴ページ</title>
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script type="text/javascript" src="history.js"></script>
+</head>
+<body>
+	<div class="header"></div>
+	<div class="main">
+		<div>
+			<h3>履歴一覧</h3>
+		</div>
+		<div id="history"></div>
+		<div>
+			<button type="button" id="newHistory">カテゴリ追加</button>
+		</div>
+	</div>
+
+	<div id="detail">
+		<p>履歴詳細</p>
+		<form id="historyForm" enctype="multipart/form-data">
+			<div class="error"></div>
+			<div>
+				<label for="name">履歴ID</label> <input type="text" name="" id="historyId"
+					disabled>
+			</div>
+
+			<div>
+				<label for="name">タイトル</label> <input type="text" id="historyTitle"
+					disabled>
+			</div>
+
+			<div>
+				<label for="name">コメント</label> <input type="text" id="historyComment"
+					required>
+			</div>
+
+			<button id="saveHistory">登録</button>
+		</form>
+	</div>
+</body>
+</html>

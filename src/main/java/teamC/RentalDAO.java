@@ -75,16 +75,14 @@ public class RentalDAO {
 					"select \n" +
 					"R.BOOK_ID \n" +
 					",B.TITLE \n" +
-					",TO_CHAR(R.BACK_DATE, 'YYYY/MM/DD') AS BACK_DATE \n" +
-					",R.RATING \n" +
 					",R.COME \n" +
 					"from \n" +
 					"BOOK B \n" +
 					",RENTAL R \n" +
 					"where 1=1 \n" +
 					"and B.BOOK_ID = R.BOOK_ID(+) \n" +
-					"and USER_ID = ? \n" +
-					"and R.BACK_DATE <= TRUNC(SYSDATE) ";
+					"and R.RENTAL_STATUS = 0 \n" +
+					"and R.USER_ID = ? " ;
 
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
@@ -252,8 +250,6 @@ public class RentalDAO {
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("TITLE"));
-		result.setBackDate(rs.getString("BACK_DATE"));
-		result.setRating(rs.getInt("RATING"));
 		result.setComment(rs.getString("COME"));
 		return result;
 
