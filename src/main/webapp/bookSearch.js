@@ -155,6 +155,7 @@ function tryRental(id){
 		success : function(){
 			alert('貸し出しました');
 			displayAll();
+			console.log("table rendered")
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
