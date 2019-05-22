@@ -17,7 +17,7 @@ public class CategoryDAO {
 
 	private static final String SELECT_ALL_QUERY =" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"order by CAT_ID";
 	private static final String SELECT_BY_ID_QUERY=" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"where \n" +"CAT_ID=?";
-	private static final String INSERT_QUERY="INSERT INTO CATEGORY(CAT_ID,CAT_NAME) \n"+"values(?,?)";
+	private static final String INSERT_QUERY="INSERT INTO CATEGORY(CAT_NAME) \n"+"values(?)";
 	private static final String UPDATE_QUERY="UPDATE CATEGORY \n" +"SET CAT_NAME = ? \n" +"WHERE CAT_ID = ?";
 	private static final String DELETE_QUERY="DELETE FROM CATEGORY WHERE CAT_ID = ?";
 	/**カテゴリ全件取得**/
