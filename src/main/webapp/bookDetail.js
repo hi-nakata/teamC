@@ -74,6 +74,13 @@ function fillEditData(id){
 			$('#form-pubdate').attr('value',json[0].pubdate)
 			$('#form-bookshelf').attr('value',json[0].shelf)
 			$('#form-btn-rental').attr("onclick", "tryRental("+ id +')')
+
+			//貸出ボタンをつける
+			if(json[0].rentalStatus==1){
+				$('#div-btn-rental').append($('<td>').append($('<button>').text("貸出").attr("disabled","true").attr("onclick","tryRental("+json[0].id+')')));
+			}else{
+				$('#div-btn-rental').append($('<td>').append($('<button>').text("貸出").attr("onclick","tryRental("+json[0].id+')')));
+			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
