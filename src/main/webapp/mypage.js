@@ -2,7 +2,7 @@
 
 var rootUrl = "/teamC/webapi/rentals";
 
-function displayAll(){
+function displayRental(){
 
 	var userId = location.search.substring( 1, location.search.length );
 	userId = decodeURIComponent( userId );
@@ -73,7 +73,7 @@ function returnBook(bookId) {
 		dataType: "json",
 		success: function() {
 			alert('返却しました');
-			displayAll();
+			displayRental();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			alert('返却処理に失敗しました');
@@ -106,7 +106,8 @@ $(document).ready(function () {
 	'use strict';
 
 	// 初期表示用
-	displayAll();
+	displayRental();
+	displayHistory();
 	hyoujiUserName();
 
 	$('#js-btn-search').click(goBookSearch);
