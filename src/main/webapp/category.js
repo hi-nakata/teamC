@@ -58,7 +58,9 @@ function addCate() {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR) {
 			alert('カテゴリデータの追加に成功しました');
-			$('#catId').val(data.id);
+
+			$('#cateId').val(data.categoryId);
+
 			findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
@@ -139,9 +141,10 @@ function renderDetails(cate) {
 
 function formToJSON() {
 	var cateId = $('#cateId').val();
+	var cateName=$('#cateName').val();
 	return JSON.stringify({
-		"cateId": (cateId == "" ? 0 : cateId),
-		"cateName": $('#cateName').val()
+		"categoryId": (cateId == "" ? 0 : cateId),
+		"categoryName": $('#cateName').val()
 	});
 }
 
