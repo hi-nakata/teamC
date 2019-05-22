@@ -16,6 +16,8 @@ public class TimerSystem implements ServletContextListener {
 
             public void run() {
                 // 定期的に実行したい処理
+            	
+            	
 
             }
         };
