@@ -75,6 +75,8 @@ function fillEditData(id){
 			$('#form-bookshelf').attr('value',json[0].shelf)
 			$('#form-btn-rental').attr("onclick", "tryRental("+ id +')')
 
+			renderSelectCategory(id);
+
 			//貸出ボタンをつける
 			if(json[0].rentalStatus==1){
 				$('#div-btn-rental').append($('<td>').append($('<button>').text("貸出").attr("disabled","true").attr("onclick","tryRental("+json[0].id+')')));
@@ -87,6 +89,22 @@ function fillEditData(id){
 		}
 	});
 
+}
+
+var rootUrlCat =  "/teamC/webapi/categories/bookId/";
+function renderSelectCategory(bookId){
+	$.ajax({
+		type : "GET",
+		url : rootUrlCat+bookId,
+		dataType : "json",
+		success : function(json){
+			//カテゴリselectの追加
+			console.log(json);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert('社員データの追加に失敗しました');
+		}
+	});
 }
 
 //本の貸出を行う機能
