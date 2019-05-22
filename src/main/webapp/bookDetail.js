@@ -100,6 +100,17 @@ function renderSelectCategory(bookId){
 		success : function(json){
 			//カテゴリselectの追加
 			console.log(json);
+			var pulldown = '<select name="form-category">'
+
+			for(n=0;json.length-1;n++){
+				if(json[n].bookId!=bookId){
+					pulldown += '<option value='+json[n].categoryId+'>'+json[n].categoryName
+			}else{
+					pulldown += '<option value='+json[n].categoryId+' selected>'+json[n].categoryName
+				}
+			}
+			pulldown += '</select>'
+			$('js-select-category').append(pulldown);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
