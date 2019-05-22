@@ -4,22 +4,23 @@ var rootUrl =  "/teamC/webapi/categories";
 
 
 function resist(){
-	var catName = $('#catName').val();
-	if(catName === ''){
+	var cateName = $('#cateName').val();
+	if(cateName === ''){
 		$('.error').text('カテゴリ名は必須入力です。');
 		return false;
 	}else{
 		$('.error').text('');
 	}
 
-	var catId = $('#catId').val();
-	if(catId ==''){
-		addCat();
+	var cateId = $('#cateId').val();
+	if(cateId ==''){
+		addCate();
 	}else{
-		updateCat(catId);
+		updateCate(cateId);
 		return false
 }
 }
+
 
 
 
@@ -33,21 +34,22 @@ function findAll(){
 	});
 }
 
-function findById(id){
-	console.log('findById start - id:'+id);
+function findById(categoryId){
+	console.log('findById start - id:'+categoryId);
 	$.ajax({
 		type : "GET",
-		url : rootUrl +'/'+ id,
+		url : rootUrl +'/'+ categoryId,
 		dataTyoe :"json",
-		success :function(data){
-			console.log('findById success: ' + data.name);
-			renderDetails(data);
+		success :function(json){
+			console.log('findById success: ');
+			console.log(json);
+			renderDetails(json);
 		}
 	})
 }
 
-function addCat() {
-	console.log('addCat start');
+function addCate() {
+	console.log('addCate start');
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
@@ -66,7 +68,7 @@ function addCat() {
 }
 
 
-function updateCat(id) {
+function updateCate(id) {
 	console.log('updatePost start');
 	$.ajax({
 		type: "PUT",
@@ -84,15 +86,16 @@ function updateCat(id) {
 	})
 }
 
-function deleteById(id) {
+function deletedById(id) {
 	console.log('delete start - id:'+id);
 	$.ajax({
 		type: "DELETE",
 		url: rootUrl+'/'+id,
 		success: function() {
+			alert('カテゴリデータの削除に成功しました');
 			findAll();
-			$('#catId').val('');
-			$('#catName').val('');
+			$('#cateId').val('');
+			$('#cateName').val('');
 		}
 	});
 }
@@ -116,9 +119,9 @@ function renderTable(data) {
 			row.append($('<td>').text(cate.categoryId));
 			row.append($('<td>').text(cate.categoryName));
 			row.append($('<td>').append(
-					$('<button>').text("編集").attr("type","button").attr("onclick","findById("+cate.id+')')));
+					$('<button>').text("編集").attr("type","button").attr("onclick","findById("+cate.categoryId+')')));
 			row.append($('<td>').append(
-					$('<button>').text("削除").attr("type","button").attr("onclick","deletedById("+cate.id+')')));
+					$('<button>').text("削除").attr("type","button").attr("onclick","deletedById("+cate.categoryId+')')));
 			table.append(row);
 		});
 
@@ -127,11 +130,18 @@ function renderTable(data) {
 
 }
 
+
+function renderDetails(cate) {
+	$('.error').text('');
+	$('#cateId').val(cate.categoryId);
+	$('#cateName').val(cate.categoryName);
+}
+
 function formToJSON() {
-	var catId = $('#catId').val();
+	var cateId = $('#cateId').val();
 	return JSON.stringify({
-		"catId": (catId == "" ? 0 : catId),
-		"catName": $('#catName').val()
+		"cateId": (cateId == "" ? 0 : cateId),
+		"cateName": $('#cateName').val()
 	});
 }
 
@@ -142,7 +152,14 @@ $(document).ready(function () {
 	// 更新ボタンにイベント設定
 	$('#searchBtn').bind('click',findAll);
 
-	$('#saveCat').click(resist);
+	$('#saveCate').click(resist);
+
+	$('#newCate').click(function() {
+		renderDetails({});
+	});
+
+
+
 
 
 	// 初期表示用
