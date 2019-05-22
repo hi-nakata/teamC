@@ -46,7 +46,7 @@ public class CategoryResource {
 	@GET
 	@Path("bookId/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Category findByBookId(@PathParam("bookId") int id) {
+	public List<Category> findByBookId(@PathParam("bookId") int id) {
 		return dao.findByBookId(id);
 	}
 
