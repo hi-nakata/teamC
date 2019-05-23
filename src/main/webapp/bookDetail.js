@@ -54,10 +54,8 @@ $(document).ready(function () {
 
 		if (bookId === undefined){
 			addBook();
-		updateCategory(formValue)
 		}else{
 			updateBook(bookId);
-		updateCategory(bookId,formValue);
 		}
 		return false;
 	})
@@ -82,7 +80,7 @@ function fillEditData(id){
 			$('#form-bookshelf').attr('value',json[0].shelf)
 			$('#form-btn-rental').attr("onclick", "tryRental("+ id +')')
 
-			renderSelectCategory(id);
+//			renderSelectCategory(id);
 
 			//貸出ボタンをつける
 			if(json[0].rentalStatus==1){
