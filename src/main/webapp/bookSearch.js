@@ -153,7 +153,7 @@ function tryRental(id){
 		url:  "/teamC/webapi/rentals/"+id,
 		dataType : "json" ,
 		success : function(data){
-			//sendLineNotify(data)
+			sendLineNotify(data)
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
@@ -163,7 +163,11 @@ function tryRental(id){
 
 function sendLineNotify(data){
 	console.log('らいん');
-	var notify = { "value1" : data.title+"を貸し出しました。返却日は"+data.dueDate+"です。"};
+	   var tomorrow = new Date();
+	    console.log("今日=" + tomorrow);
+	    tomorrow.setDate(tomorrow.getDate() + 14);
+	    console.log("明日=" + tomorrow);
+	var notify = { "value1" : "本を貸し出しました。返却日は"+tomorrow+"です。"};
 
 	var key = 'b-KSby48PR5DgiLcEXBh_B'
 	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;

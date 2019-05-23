@@ -220,7 +220,7 @@ public class RentalDAO {
 			statement.setString(2, userId);
 			statement.executeUpdate();
 			// INSERTできたらKEYを取得
-			ResultSet rs = statement.getGeneratedKeys();
+			//ResultSet rs = statement.getGeneratedKeys();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
