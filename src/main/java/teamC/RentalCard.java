@@ -15,6 +15,7 @@ public class RentalCard {
 	private String backDate;
 	private int rating;
 	private String comment;
+	private String userId;
 
 	public String getTitle() {
 		return title;
@@ -99,5 +100,13 @@ public class RentalCard {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

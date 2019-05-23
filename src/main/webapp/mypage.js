@@ -109,7 +109,6 @@ function displayHistory(){
 							$('<button>').text("登録").attr("type","button").attr("onclick", "("+rental.bookId+')')
 						));
 					table.append(row);
-
 				});
 				$('#history').append(table);
 			}
@@ -150,13 +149,20 @@ function goMyPage(){
 	location.href ='./MyPage.html?userId='+hogepiyo;
 }
 
+function goHistory(){
+	var hogepiyo =localStorage.getItem("userId");
+	location.href ='./History.html?userId='+hogepiyo;
+}
+
 function hyoujiUserName(){
 	$('#hoge').append(localStorage.getItem("userName"));
 }
 
 function sendLineNotify(data){
 	console.log('らいん');
+
 	var notify = { "value1" : data.title+"を返却してください"};
+
 	var key = 'b-KSby48PR5DgiLcEXBh_B'
 	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;
 //	$.post( url, notify )
@@ -177,7 +183,9 @@ function sendLineNotify(data){
 	    xhrFields: {
 	        withCredentials: true
 	    },
+
 	    dataType: "json",
+
 		success: function() {
 			console.log("dekita")
 		},
@@ -215,5 +223,6 @@ $(document).ready(function () {
 
 	$('#js-btn-search').click(goBookSearch);
 	$('#js-btn-mypage').click(goMyPage);
+	$('#js-btn-history').click(goHistory);
 
 });

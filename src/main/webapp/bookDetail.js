@@ -133,7 +133,7 @@ function tryRental(id){
 		dataType : "json" ,
 		success : function(){
 			alert('貸し出しました');
-			displayAll();
+			//displayAll();
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
