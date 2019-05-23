@@ -58,12 +58,26 @@ public class CategoryResource {
 	 * @return DB上のIDがセットされた部署情報。失敗した場合IDが0のまま。
 	 * @throws WebApplicationException 入力データチェックに失敗した場合に送出される。
 	 */
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Category create(Category category) throws WebApplicationException {
+//		return dao.create(category);
+//	}
+
+	/**
+	 * bookIDにひもづいたカテゴリ情報を登録
+	 */
+
 	@POST
+	@Path("bookId/{formValue}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Category create(Category category) throws WebApplicationException {
 		return dao.create(category);
 	}
+
+
 
 	/**
 	 * 指定した情報でDBを更新する。
@@ -72,7 +86,7 @@ public class CategoryResource {
 	 * @throws WebApplicationException 入力データチェックに失敗した場合に送出される。
 	 */
 	@PUT
-	@Path("{id}")
+	@Path("bookId/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void update(Category category) throws WebApplicationException {
 		dao.update(category);

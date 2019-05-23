@@ -28,7 +28,7 @@ public class CategoryDAO {
 			") BC, \n" +
 			" CATEGORY CA \n" +
 			"where 1=1 \n" +
-			"and CA.CAT_ID = BC.CAT_ID(+) \n";
+			"and BC.CAT_ID(+) = CA.CAT_ID \n";
 	private static final String INSERT_QUERY="INSERT INTO CATEGORY(CAT_NAME) \n"+"values(?)";
 	private static final String UPDATE_QUERY="UPDATE CATEGORY \n" +"SET CAT_NAME = ? \n" +"WHERE CAT_ID = ?";
 	private static final String DELETE_QUERY="DELETE FROM CATEGORY WHERE CAT_ID = ?";
@@ -95,7 +95,7 @@ public class CategoryDAO {
 
 			ResultSet rs =statement.executeQuery();
 
-			if(rs.next()){
+			while(rs.next()){
 				result.add(processRow(rs));
 			}
 		}catch(SQLException e){
@@ -177,6 +177,7 @@ public class CategoryDAO {
 
 	private Category processRow(ResultSet rs) throws SQLException{
 		Category result = new Category();
+		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setCategoryId(rs.getInt("CAT_ID"));
 		result.setCategoryName(rs.getString("CAT_NAME"));
 		return result;
