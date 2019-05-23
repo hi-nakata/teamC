@@ -153,6 +153,8 @@ function tryRental(id){
 		url:  "/teamC/webapi/rentals/"+id,
 		dataType : "json" ,
 		success : function(data){
+			alert('貸し出しました');
+			displayAll()
 			sendLineNotify(data)
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
