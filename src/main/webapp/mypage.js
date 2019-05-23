@@ -182,7 +182,7 @@ function sendLineNotify(data){
 			console.log("dekita")
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('dame');
+			console.log('dame');
 		}
 	})
 
