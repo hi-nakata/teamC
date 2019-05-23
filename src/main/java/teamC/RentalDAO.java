@@ -62,16 +62,16 @@ public class RentalDAO {
 	private static final String INSERT_RENTAL_CARD =
 					"insert into RENTAL \n" +
 					"(BOOK_ID,RENTAL_DATE,DUE_DATE,CHECK_DATE,ALERT_STATUS,USER_ID,RENTAL_STATUS,BACK_DATE) \n" +
-					"values( ? , \n" +
-					"trunc(sysdate), \n" +
-					"trunc(sysdate)+14, \n" +
-					"'20190101', \n" +
+					"values(?, \n" +
+					"TO_DATE(sysdate, 'YYYY//MM/DD'), \n" +
+					"TO_DATE(sysdate, 'YYYY//MM/DD'), \n" +
+					"TO_DATE('20190101', 'YYYY//MM/DD'), \n" +
 					"0, \n" +
 					"?, \n" +
 					"1, \n" +
-					"'29290101') ";
+					"TO_DATE('29290101', 'YYYY//MM/DD'))";
 
-	private static final String SELECT_ALL_HISTORY =
+	static final String SELECT_ALL_HISTORY =
 					"select \n" +
 					"R.BOOK_ID \n" +
 					",B.TITLE \n" +
