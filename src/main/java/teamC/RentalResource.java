@@ -53,11 +53,11 @@ public class RentalResource {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void create(@PathParam("id") int id, @Context final HttpServletRequest request){
+	public RentalCard create(@PathParam("id") int id, @Context final HttpServletRequest request){
 		System.out.println("貸出");
 		HttpSession ses = request.getSession();
 		String userId = (String) ses.getAttribute("loginId");
-		dao.rental(id,userId);
+		return dao.rental(id,userId);
 	}
 
 	@PUT

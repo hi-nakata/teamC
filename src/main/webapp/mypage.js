@@ -156,20 +156,15 @@ function hyoujiUserName(){
 
 function sendLineNotify(data){
 	console.log('らいん');
-	var notify = { "value1" : data.title+"を返却してください"};
+	var notify = { "value1" : data.title+"の返却日まで残り"+data.restDate+"です。"};
+	if(data.restDate<0){
+		notify = { "value1" : data.title+"は返却日を過ぎています。速やかに返却してください。"};
+	}
+	if(data.restDate==0){
+		notify = { "value1" : data.title+"の返却日は本日です。"};
+	}
 	var key = 'b-KSby48PR5DgiLcEXBh_B'
 	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;
-//	$.post( url, notify )
-//	.done(function( data ) {
-//		console.log( data);
-//	})
-//	$.ajax({
-//		  type: 'POST',
-//		  url: url,
-//		  data: notify,
-////		  dataType: dataType
-////		  success: success,
-//		});
 	$.ajax({
 		type: "POST",
 		data:notify,
@@ -185,23 +180,7 @@ function sendLineNotify(data){
 			console.log('dame');
 		}
 	})
-
-//	axios({
-//		  url: url,
-//		  method: 'POST',
-//		  headers: {
-//		    'Content-Type': 'application/x-www-form-urlencoded',
-//		  },
-//		  data: json
-//		}).then(res => {
-//		    //成功時の処理
-//		    console.log(res)
-//		  })
-//		  .catch(err => {
-//		    //エラー時の処理
-//		    console.error
-//		  })
-	}
+}
 
 
 $(document).ready(function () {

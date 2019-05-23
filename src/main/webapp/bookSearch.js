@@ -152,13 +152,35 @@ function tryRental(id){
 		type : 'POST',
 		url:  "/teamC/webapi/rentals/"+id,
 		dataType : "json" ,
-		success : function(){
-			alert('貸し出しました');
-			displayAll();
+		success : function(data){
+			//sendLineNotify(data)
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
 
+	})
+}
+
+function sendLineNotify(data){
+	console.log('らいん');
+	var notify = { "value1" : data.title+"を貸し出しました。返却日は"+data.dueDate+"です。"};
+
+	var key = 'b-KSby48PR5DgiLcEXBh_B'
+	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;
+	$.ajax({
+		type: "POST",
+		data:notify,
+		url: url,
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    dataType: "json",
+		success: function() {
+			console.log("dekita")
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log('dame');
+		}
 	})
 }
 

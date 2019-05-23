@@ -118,6 +118,8 @@ function renderSelectCategory(bookId){
 	});
 }
 
+
+
 //本の貸出を行う機能
 function tryRental(id){
 	console.log('tryRental start.');
@@ -126,13 +128,36 @@ function tryRental(id){
 		type : 'POST',
 		url:  "/teamC/webapi/rentals"+"/"+id,
 		dataType : "json" ,
-		success : function(){
+		success : function(data){
 			alert('貸し出しました');
-			displayAll();
+			//sendLineNotify(data)
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
 
+	})
+}
+
+function sendLineNotify(data){
+	console.log('らいん');
+	var notify = { "value1" : data.title+"を貸し出しました。返却日は"+data.dueDate+"です。"};
+
+	var key = 'b-KSby48PR5DgiLcEXBh_B'
+	var url ='https://maker.ifttt.com/trigger/book_alart/with/key/'+key;
+	$.ajax({
+		type: "POST",
+		data:notify,
+		url: url,
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    dataType: "json",
+		success: function() {
+			console.log("dekita")
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log('dame');
+		}
 	})
 }
 
