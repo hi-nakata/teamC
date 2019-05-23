@@ -17,15 +17,18 @@ public class CategoryDAO {
 
 	private static final String SELECT_ALL_QUERY =" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"order by CAT_ID";
 	private static final String SELECT_BY_ID_QUERY=" \n" +"select \n" +"* \n" +"from \n" +"CATEGORY \n" +"where \n" +"CAT_ID=?";
-	private static final String SELECT_BY_BOOKID_QUERY="select * \n" +
+	private static final String SELECT_BY_BOOKID_QUERY="select CA.CAT_ID, \n" +
+			"CA.CAT_NAME, \n" +
+			"BC.BC_ID, \n" +
+			"BC.BOOK_ID \n" +
 			"from ( \n" +
 			"	select* \n" +
-			"	from BOOK_KATEGORY_MASTER \n" +
-			"	where BOOK_ID = 1 \n" +
+			"	from BOOK_CATE \n" +
+			"	where BOOK_ID = ? \n" +
 			") BC, \n" +
 			" CATEGORY CA \n" +
 			"where 1=1 \n" +
-			"and BC.CAT_ID(+) = CA.CAT_ID \n";
+			"and CA.CAT_ID = BC.CAT_ID(+) \n";
 	private static final String INSERT_QUERY="INSERT INTO CATEGORY(CAT_NAME) \n"+"values(?)";
 	private static final String UPDATE_QUERY="UPDATE CATEGORY \n" +"SET CAT_NAME = ? \n" +"WHERE CAT_ID = ?";
 	private static final String DELETE_QUERY="DELETE FROM CATEGORY WHERE CAT_ID = ?";
@@ -69,6 +72,7 @@ public class CategoryDAO {
 
 			if(rs.next()){
 				result = processRow(rs);
+				result.setBookId(rs.getInt("BOOK_ID"));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -78,10 +82,10 @@ public class CategoryDAO {
 		return result;
 	}
 
-	/**id指定の検索実施**/
-	public Category findByBookId(int id){
+	/**bookid指定の検索実施**/
+	public List<Category> findByBookId(int id){
 
-		Category result = null;
+		List<Category> result = new ArrayList<>();
 		Connection connection =ConnectionProvider.getConnection();
 		if(connection == null){
 			return result;
@@ -92,7 +96,7 @@ public class CategoryDAO {
 			ResultSet rs =statement.executeQuery();
 
 			if(rs.next()){
-				result = processRow(rs);
+				result.add(processRow(rs));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
