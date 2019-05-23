@@ -16,6 +16,10 @@ $(document).ready(function () {
 		fillEditData(bookId);
 
 	$('#form-btn-regist').click(function() {
+
+		var formValue = $('option:selected').val();
+		console.log('formvalue:',formValue);
+
 		$('.error').children().remove();//error出力欄をリセット
 		if ($('#name').val() === '') {
 			$('.error').append('<div>名前は必須入力です。</div>');
@@ -48,10 +52,11 @@ $(document).ready(function () {
 			return false;
 		}
 
-		if (bookId === undefined)
+		if (bookId === undefined){
 			addBook();
-		else
+		}else{
 			updateBook(bookId);
+		}
 		return false;
 	})
 });
@@ -75,7 +80,7 @@ function fillEditData(id){
 			$('#form-bookshelf').attr('value',json[0].shelf)
 			$('#form-btn-rental').attr("onclick", "tryRental("+ id +')')
 
-			renderSelectCategory(id);
+//			renderSelectCategory(id);
 
 			//貸出ボタンをつける
 			if(json[0].rentalStatus==1){
@@ -102,7 +107,7 @@ function renderSelectCategory(bookId){
 			console.log(json);
 			var pulldown = '<select name="form-category">'
 
-			for(n=0;json.length-1;n++){
+			for(var n=0;n<json.length;n++){
 				if(json[n].bookId!=bookId){
 					pulldown += '<option value='+json[n].categoryId+'>'+json[n].categoryName
 			}else{
@@ -110,7 +115,7 @@ function renderSelectCategory(bookId){
 				}
 			}
 			pulldown += '</select>'
-			$('js-select-category').append(pulldown);
+			$('#js-select-category').append(pulldown);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('社員データの追加に失敗しました');
@@ -130,7 +135,6 @@ function tryRental(id){
 		dataType : "json" ,
 		success : function(data){
 			alert('貸し出しました');
-			//sendLineNotify(data)
 		},error: function(jqXHR, textStatus, errorThrown){
 			alert('貸出処理に失敗しました。')
 		}
@@ -182,9 +186,10 @@ function addBook() {
 			if(data==null){
 				alert('編集権限がありません');
 			}else{
-				console.log(data)
+				console.log(data);
 				alert('蔵書データを追加しました');
-				location.href ='./BookDetail.html'
+				location.href ='./BookDetail.html';
+
 			}
 
 		},
@@ -192,6 +197,24 @@ function addBook() {
 			alert('蔵書データの追加に失敗しました');
 		}
 	})
+}
+
+function renderEditCategory(formValue){
+	console.log('renderEditCategory start');
+
+	var fd ={"formValue":formValue};
+
+	$.ajax({
+		url : rootUrlCat+formValue,
+		type : "POST",
+		data : fd,
+		contentType : false,
+		processData : false,
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			console.log(data);
+		}
+})
 }
 
 function updateBook(id) {
@@ -216,6 +239,26 @@ function updateBook(id) {
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('蔵書データの更新に失敗しました');
+		}
+	})
+}
+
+
+function updateCategory(categoryId,formValue){
+
+	console.log('updateEmployee start');
+
+	var fd = {"categoryId": categoryId,
+				"formValue":formValue};
+	$.ajax({
+		url : rootUrlCat+categoryId,
+		type : "PUT",
+		data : fd,
+		contentType : false,
+		processData : false,
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			console.log('success');
 		}
 	})
 }

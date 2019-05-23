@@ -71,20 +71,42 @@ public class RentalDAO {
 					"1, \n" +
 					"'29290101') ";
 
-	private static final String SELECT_ALL_HISTORY =
+	static final String SELECT_ALL_HISTORY =
 					"select \n" +
 					"R.BOOK_ID \n" +
 					",B.TITLE \n" +
-					",TO_CHAR(R.BACK_DATE, 'YYYY/MM/DD') AS BACK_DATE \n" +
-					",R.RATING \n" +
 					",R.COME \n" +
 					"from \n" +
 					"BOOK B \n" +
 					",RENTAL R \n" +
 					"where 1=1 \n" +
 					"and B.BOOK_ID = R.BOOK_ID(+) \n" +
+					"and R.RENTAL_STATUS = 0 \n" +
+					"and R.USER_ID = ? \n" +
+					"order by BOOK_ID ";
+
+	private static final String SELECT_BY_ID_QUERY =
+					"select \n" +
+					"R.BOOK_ID \n" +
+					",B.TITLE \n" +
+					",R.COME \n" +
+					"from \n" +
+					"BOOK B \n" +
+					",RENTAL R \n" +
+					"where 1=1 \n" +
+					"and B.BOOK_ID = R.BOOK_ID(+) \n" +
+					"and R.RENTAL_STATUS = 0 \n" +
+					"and R.USER_ID = ? \n" +
+					"and R.BOOK_ID = ? \n" +
+					"order by BOOK_ID " ;
+
+	private static final String UPDATE_QUERY =
+					"update RENTAL \n" +
+					"set COME = ? \n" +
+					"where 1=1 \n" +
+					"and RENTAL_STATUS = 0 \n" +
 					"and USER_ID = ? \n" +
-					"and R.BACK_DATE <= TRUNC(SYSDATE) ";
+					"and BOOK_ID = ? " ;
 
 	public List<RentalCard> allRentals(String userId){
 		List<RentalCard> result = new ArrayList<>();
@@ -132,6 +154,51 @@ public class RentalDAO {
 			ConnectionProvider.close(connection);
 		}
 		return result;
+	}
+
+	public RentalCard findById(String userId, int bookId){
+
+		RentalCard result = null;
+		Connection connection =ConnectionProvider.getConnection();
+		if(connection == null){
+			return result;
+		}
+		try(PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY)){
+			statement.setString(1,userId);
+			statement.setInt(2,bookId);
+
+			ResultSet rs =statement.executeQuery();
+
+			if(rs.next()){
+				result = historyIdRentalCardResultSet(rs);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionProvider.close(connection);
+		}
+		return result;
+	}
+
+	public boolean update(RentalCard rental) {
+		Connection connection = ConnectionProvider.getConnection();
+		if (connection == null) {
+			return false;
+		}
+
+		int count = 0;
+		try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+			statement.setString(1, rental.getComment());
+			statement.setString(2, rental.getUserId());
+			statement.setInt(3, rental.getBookId());
+			count = statement.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			ConnectionProvider.close(connection);
+		}
+
+		return count == 1;
 	}
 
 	public List<RentalCard> allAlerts() {
@@ -255,8 +322,15 @@ public class RentalDAO {
 		RentalCard result = new RentalCard();
 		result.setBookId(rs.getInt("BOOK_ID"));
 		result.setTitle(rs.getString("TITLE"));
-		result.setBackDate(rs.getString("BACK_DATE"));
-		result.setRating(rs.getInt("RATING"));
+		result.setComment(rs.getString("COME"));
+		return result;
+
+	}
+
+	private RentalCard historyIdRentalCardResultSet(ResultSet rs) throws SQLException{
+		RentalCard result = new RentalCard();
+		result.setBookId(rs.getInt("BOOK_ID"));
+		result.setTitle(rs.getString("TITLE"));
 		result.setComment(rs.getString("COME"));
 		return result;
 

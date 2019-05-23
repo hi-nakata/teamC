@@ -41,7 +41,7 @@ public class BookDAO {
 			"SET TITLE=?,AUTHOR=?,PUBLISHER=?,YEAR=?,SHELF=?  \n" +
 			"WHERE BOOK_ID = ?";
 
-	private static final String ORDER = " ORDER BY BO.SHELF,BO.TITLE";
+	private static final String ORDER = " ORDER BY BO.SHELF,BO.YEAR DESC";
 
 
 	/**本のデータすべてを取得する**/
@@ -78,7 +78,7 @@ public class BookDAO {
 			return result;
 		}
 
-		String queryString = SELECT_ALL_BOOK +param.getWhereClause();
+		String queryString = SELECT_ALL_BOOK +param.getWhereClause()+ ORDER;
 		try(PreparedStatement statement = connection.prepareStatement(queryString)){
 			param.setParameter(statement);
 

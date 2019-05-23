@@ -11,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -49,6 +50,13 @@ public class RentalResource {
 		return dao.allHistory(userId);
 	}
 
+	@GET
+	@Path("bookId/{userId}/{bookId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public RentalCard findById(@PathParam("userId") String userId,@PathParam("bookId") int bookId) {
+		return dao.findById(userId,bookId);
+	}
+
 	@POST
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -74,5 +82,12 @@ public class RentalResource {
 	public void alert(@PathParam("bookId") int bookId){
 		System.out.println("催促");
 		dao.alert(bookId);
+	}
+
+	@PUT
+	@Path("history/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void update(RentalCard rentalCard) throws WebApplicationException {
+		dao.update(rentalCard);
 	}
 }
